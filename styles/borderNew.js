@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.form`
   width: 1200px;
   /* height: 1847px; */
   border: 1px solid black;
