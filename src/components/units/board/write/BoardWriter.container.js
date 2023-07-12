@@ -7,15 +7,29 @@ import { CREATE_BOARD } from './BoardWriter.queries';
 
 export default function BoardsWriteContainer() {
   const router = useRouter()
+  const [isActive, setIsActive] = useState(true)
 
   const [createBoard] = useMutation(CREATE_BOARD)
 
   const { 
     register,
+    watch,
     handleSubmit,
     formState: { errors }
    } = useForm();
 
+  const onChangeWriter = (e) => {
+   e.target.value && watch("password") && watch("title") && watch("contents") ? setIsActive(false) : setIsActive(true)
+  }
+  const onChangePassword = (e) => {
+   e.target.value && watch("writer") && watch("title") && watch("contents") ? setIsActive(false) : setIsActive(true)
+  }
+  const onChangeTitle = (e) => {
+   e.target.value && watch("password") && watch("writer") && watch("contents") ? setIsActive(false) : setIsActive(true)
+  }
+  const onChangeContents = (e) => {
+   e.target.value && watch("password") && watch("title") && watch("writer") ? setIsActive(false) : setIsActive(true)
+  }
   const onValid = async (data) => {
     try {
       const result = await createBoard({
@@ -45,5 +59,10 @@ export default function BoardsWriteContainer() {
     register = {register}
     handleSubmit = {handleSubmit}
     errors = {errors}
+    onChangeContents = {onChangeContents}
+    onChangeTitle = {onChangeTitle}
+    onChangePassword = {onChangePassword}
+    onChangeWriter = {onChangeWriter}
+    isActive = {isActive}
   />
 }
