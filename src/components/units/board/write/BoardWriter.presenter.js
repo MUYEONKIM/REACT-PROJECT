@@ -2,8 +2,10 @@ import * as S from "./BoardWriter.styles";
 
 export default function BoardWriteUI(props) {
   return (
-    <S.Wrapper onSubmit={props.handleSubmit(props.onValid, props.onInValid)}>
-      <S.Title>게시글 등록</S.Title>
+    <S.Wrapper onSubmit={props.isEdit? 
+                        props.handleSubmit(props.onClickUpdate, props.onInValid) : 
+                        props.handleSubmit(props.onValid, props.onInValid)}>
+      <S.Title>{props.isEdit? "게시글 수정": "게시글 등록"}</S.Title>
       <S.WriterWrapper>
         <S.InputWrapper>
           <S.Label>작성자</S.Label>
@@ -11,7 +13,9 @@ export default function BoardWriteUI(props) {
             validate : (value) => value ? true:"작성자를 작성해주세요."}
           )} 
           onChange={e => props.onChangeWriter(e)}
-          type="text" placeholder="이름을 적어주세요."/>
+          type="text" placeholder="이름을 적어주세요."
+          defaultValue={props.data?.writer}
+          readOnly={props.data?.writer}/>
           <S.Error>{props.errors.writer?.message}</S.Error>
         </S.InputWrapper>
         <S.InputWrapper>
@@ -30,7 +34,8 @@ export default function BoardWriteUI(props) {
           validate : (value) => value? true: "제목을 작성해주세요."}
           )} 
           onChange = {e => props.onChangeTitle(e)}
-          type="text" placeholder="제목을 작성해주세요." />
+          type="text" placeholder="제목을 작성해주세요."
+          defaultValue={props.data?.title} />
           <S.Error>{props.errors.title?.message}</S.Error>
       </S.InputWrapper>
       <S.InputWrapper>
@@ -39,7 +44,8 @@ export default function BoardWriteUI(props) {
           validate : (value) => value? true: "내용을 작성해주세요."}
           )} 
           onChange={e => props.onChangeContents(e)}
-          placeholder="내용을 작성해주세요." />
+          placeholder="내용을 작성해주세요."
+          defaultValue={props.data?.contents} />
           <S.Error>{props.errors.contents?.message}</S.Error>
       </S.InputWrapper>
       <S.InputWrapper>
@@ -69,7 +75,9 @@ export default function BoardWriteUI(props) {
         <S.RadioLabel htmlFor="image">사진</S.RadioLabel>
       </S.OptionWrapper>
       <S.ButtonWrapper>
-        <S.SubmitButton isActive={props.isActive} type="submit">등록하기</S.SubmitButton>
+        <S.SubmitButton 
+          isActive={props.isActive} 
+          type="submit">{props.isEdit? "수정하기": "등록하기"}</S.SubmitButton>
       </S.ButtonWrapper>
     </S.Wrapper>
   );

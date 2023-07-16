@@ -17,6 +17,10 @@ export default function BoardDetailContainer() {
     router.push("/boards")
   }
 
+  const onClickMoveEdit = () => {
+    router.push(`/boards/${router.query.boardid}/edit`)
+  }
+
   const onClickDelete = async () => {
     console.log('aaa')
     try {
@@ -30,5 +34,9 @@ export default function BoardDetailContainer() {
     }
   }
   
-  return <BoardDetailUI data={data} onClickDelete={onClickDelete} onClick={onClickMoveBoards} />
+  return <BoardDetailUI 
+          data={data} 
+          onClickDelete={onClickDelete} 
+          onClickMoveBoards={onClickMoveBoards} 
+          onClickMoveEdit={onClickMoveEdit}/>
 }

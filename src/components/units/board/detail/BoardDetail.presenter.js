@@ -22,8 +22,8 @@ export default function BoardDetailUI(props) {
           </S.Body>
         </S.CardWrapper>
         <S.BottomWrapper>
-          <S.Button>목록</S.Button>
-          <S.Button>수정</S.Button>
+          <S.Button onClick={props.onClickMoveBoards}>목록</S.Button>
+          <S.Button onClick={props.onClickMoveEdit}>수정</S.Button>
           <S.Button onClick={props.onClickDelete}>삭제</S.Button>
         </S.BottomWrapper>
       </S.Wrapper>

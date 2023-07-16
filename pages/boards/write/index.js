@@ -2,6 +2,6 @@ import BoardsWriteContainer from "../../../src/components/units/board/write/Boar
 
 export default function BoardsWritePage() {
   return(
-    <BoardsWriteContainer />
+    <BoardsWriteContainer isEdit={false}/>
   )
 }
