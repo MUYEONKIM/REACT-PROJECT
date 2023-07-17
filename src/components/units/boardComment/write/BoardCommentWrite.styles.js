@@ -3,9 +3,15 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   width: 1200px;
   margin: 0px 100px;
+  margin-bottom: 3em;
 `;
 
 export const PencilIcon = styled.img``;
+
+export const TitleSpan = styled.span`
+  margin-left: 1em;
+  font-size: 20px;
+`;
 
 export const InputWrapper = styled.div`
   display: flex;
@@ -52,7 +58,8 @@ export const ContentsLength = styled.div`
 export const Button = styled.button`
   width: 91px;
   height: 51px;
-  background-color: black;
+  background-color: ${(props) => props.isEdit ? "#fa6400": "black"};
   color: white;
   cursor: pointer;
+  margin: 5px;
 `;

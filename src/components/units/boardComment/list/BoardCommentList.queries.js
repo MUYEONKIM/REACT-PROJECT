@@ -17,3 +17,4 @@ export const DELETE_COMMENT = gql`
     deleteBoardComment(password: $password, boardCommentId: $boardCommentId)
   }
 `
+
