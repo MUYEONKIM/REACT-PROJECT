@@ -1,36 +1,39 @@
 import { useMutation } from "@apollo/client";
-import BoardCommentWriteUI from "./BoardCommentWrite.presenter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { CREATE_COMMENT, UPDATE_COMMENT } from "./BoardCommentWrite.queries";
 import { FETCH_COMMENTS } from "../list/BoardCommentList.queries";
+import type { IMutation, IMutationCreateBoardCommentArgs, IMutationUpdateBoardArgs, IMutationUpdateBoardCommentArgs } from "../../../../commons/types/generated/types";
+import type { ChangeEvent } from "react";
+import BoardCommentWriteUI from "./BoardCommentWrite.presenter";
+import { IBoardCommentWriteProps } from "./BoardCommentWrite.types";
 
-export default function BoardCommentWriteContainer(props) {
+export default function BoardCommentWriteContainer(props: IBoardCommentWriteProps): JSX.Element {
   const router = useRouter()
-  const [createBoardComment] = useMutation(CREATE_COMMENT)
-  const [updateBoardComment] = useMutation(UPDATE_COMMENT)
+  const [createBoardComment] = useMutation<Pick<IMutation, "createBoardComment">,IMutationCreateBoardCommentArgs>(CREATE_COMMENT)
+  const [updateBoardComment] = useMutation<Pick<IMutation, "updateBoardComment">, IMutationUpdateBoardCommentArgs>(UPDATE_COMMENT)
 
   const [writer, setWriter] = useState('')
   const [password, setPassword] = useState('')
   const [contents, setContents] = useState('')
   const [rating, setRating] = useState(0)
 
-  const onChangeWriter = (e) => {
+  const onChangeWriter = (e: ChangeEvent<HTMLInputElement>): void => {
     setWriter(e.target.value)
   }
 
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>): void => {
     setPassword(e.target.value)
   }
 
-  const onChangeContents = (e) => {
+  const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     setContents(e.target.value)
   }
 
-  const onChangeRating = (e) => {
-    setRating(e.target.value)
-  }
-  const onClickWrite = async () => {
+  // const onChangeRating = (e: ChangeEvent<HTMLDivElement>): void => {
+  //   setRating(e.target.value)
+  // }
+  const onClickWrite = async (): Promise<void> => {
     try {
       if(typeof router.query.boardid !== "string") {
         alert("시스템에 문제가 있습니다.")
@@ -53,13 +56,18 @@ export default function BoardCommentWriteContainer(props) {
           }
         ]
       })
+      setContents('')
     } catch(error) {
-      console.log(error.message)
+      if (error instanceof Error) alert(error.message);
     }
   }
 
-  const onClickUpdate = async (e) => {
+  const onClickUpdate = async (): Promise<void> => {
     try {
+      if (typeof props.el?._id !== "string") {
+        alert("시스템에 문제가 있습니다.");
+        return;
+      }
       if (!contents) {
         alert("내용이 수정되지 않았습니다.")
         return;
@@ -82,18 +90,18 @@ export default function BoardCommentWriteContainer(props) {
           variables: { boardId: router.query.boardid }
         },],
       })
-      props.setIsEdit(false)
+      props.setIsEdit!(curr => !curr)
     } catch(error) {
-      alert(error.message)
+      if (error instanceof Error) alert(error.message);
     }
   }
 
 
-  return <BoardCommentWriteUI 
+  return <BoardCommentWriteUI
           onChangeWriter={onChangeWriter}
           onChangePassword={onChangePassword}
           onChangeContents={onChangeContents}
-          onChangeRating={onChangeRating}
+          // onChangeRating={onChangeRating}
           onClickWrite={onClickWrite}
           onClickUpdate={onClickUpdate}
           contents={contents}

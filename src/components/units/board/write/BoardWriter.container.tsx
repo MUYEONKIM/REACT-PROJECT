@@ -4,35 +4,38 @@ import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client' 
 import BoardWriteUI from './BoardWriter.presenter';
 import { CREATE_BOARD, UPDATE_BOARD } from './BoardWriter.queries';
+import type { FormValue, BoardData, IBoardWritePropsUI } from './BoardWriter.types';
+import type {ChangeEvent} from "react"
+import type { IMutation, IMutationCreateBoardArgs, IMutationUpdateBoardArgs, IUpdateBoardInput } from '../../../../commons/types/generated/types';
 
-export default function BoardsWriteContainer(props) {
+export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Element {
   const router = useRouter()
   const [isActive, setIsActive] = useState(true)
 
-  const [createBoard] = useMutation(CREATE_BOARD)
-  const [updateBoard] = useMutation(UPDATE_BOARD)
+  const [createBoard] = useMutation<Pick<IMutation, "createBoard">, IMutationCreateBoardArgs>(CREATE_BOARD)
+  const [updateBoard] = useMutation<Pick<IMutation, "updateBoard">, IMutationUpdateBoardArgs>(UPDATE_BOARD)
 
   const { 
     register,
     watch,
     handleSubmit,
     formState: { errors }
-   } = useForm();
+   } = useForm<FormValue>();
 
-  const onChangeWriter = (e) => {
+  const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
    e.target.value && watch("password") && watch("title") && watch("contents") ? setIsActive(false) : setIsActive(true)
   }
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
    e.target.value && watch("writer") && watch("title") && watch("contents") ? setIsActive(false) : setIsActive(true)
   }
-  const onChangeTitle = (e) => {
+  const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
    e.target.value && watch("password") && watch("writer") && watch("contents") ? setIsActive(false) : setIsActive(true)
   }
-  const onChangeContents = (e) => {
+  const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>) => {
    e.target.value && watch("password") && watch("title") && watch("writer") ? setIsActive(false) : setIsActive(true)
   }
 
-  const onValid = async (data) => {
+  const onValid = async (data: BoardData): Promise<void> => {
     try {
       const result = await createBoard({
         variables: {
@@ -45,16 +48,13 @@ export default function BoardsWriteContainer(props) {
         }
       })
       alert("게시물이 정상적으로 등록되었습니다.")
-      router.push(`/boards/${result.data.createBoard._id}`)
-    } catch(error) {
+      void router.push(`/boards/${result.data?.createBoard._id}`)
+    } catch(error: any) {
       alert(error.message)
     }
   }
-  const onInValid = (error) => {
-    console.log("에러입니다", error)
-  }
 
-  const onClickUpdate = async (data) => {
+  const onClickUpdate = async (data: BoardData): Promise<void> => {
     if (!data.title && !data.contents) {
       alert("수정한 내용이 없습니다.");
       return;
@@ -65,25 +65,28 @@ export default function BoardsWriteContainer(props) {
       return;
     }
 
-    const updataBoardInput = {}
+    const updataBoardInput: IUpdateBoardInput = {}
     if (data.title) updataBoardInput.title = data.title;
     if (data.contents) updataBoardInput.contents = data.contents;
     try {
+      if (typeof router.query.boardid !== "string") {
+        alert("시스템에 문제가 있습니다.");
+        return;
+      }
       const result = await updateBoard({
         variables: {
+          boardId : router.query.boardid,
           updateBoardInput : updataBoardInput,
           password : data.password,
-          boardId : router.query.boardid,
         }
       })
-      router.push(`/boards/${result.data.updateBoard._id}`)
+      void router.push(`/boards/${result.data?.updateBoard._id}`)
     } catch(error) {
-      alert(error.message)
+      if (error instanceof Error) alert(error.message);
     }
   }
   return <BoardWriteUI 
     onValid = {onValid}
-    oninValid = {onInValid}
     register = {register}
     handleSubmit = {handleSubmit}
     errors = {errors}
@@ -94,6 +97,6 @@ export default function BoardsWriteContainer(props) {
     onClickUpdate = {onClickUpdate}
     isActive={isActive}
     isEdit={props.isEdit}
-    data = {props.data?.fetchBoard}
+    data = {props.data}
   />
 }

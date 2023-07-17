@@ -1,7 +1,8 @@
 import { getDate } from "../../../../commons/libraries/utils";
 import * as S from "./Boardlist.style";
+import type { IBoardlistUIProps } from "./Boardlist.types";
 
-export default function BoardListUI(props) {
+export default function BoardListUI(props: IBoardlistUIProps): JSX.Element {
   return (
     <S.Wrapper>
       <S.TableTop />

@@ -1,10 +1,11 @@
 import * as S from "./BoardWriter.styles";
+import { IBoardWritePropsUI } from "./BoardWriter.types";
 
-export default function BoardWriteUI(props) {
+export default function BoardWriteUI(props: IBoardWritePropsUI) {
   return (
     <S.Wrapper onSubmit={props.isEdit? 
-                        props.handleSubmit(props.onClickUpdate, props.onInValid) : 
-                        props.handleSubmit(props.onValid, props.onInValid)}>
+                        props.handleSubmit(props.onClickUpdate) : 
+                        props.handleSubmit(props.onValid)}>
       <S.Title>{props.isEdit? "게시글 수정": "게시글 등록"}</S.Title>
       <S.WriterWrapper>
         <S.InputWrapper>
@@ -14,8 +15,8 @@ export default function BoardWriteUI(props) {
           )} 
           onChange={e => props.onChangeWriter(e)}
           type="text" placeholder="이름을 적어주세요."
-          defaultValue={props.data?.writer}
-          readOnly={props.data?.writer}/>
+          defaultValue={props.data?.fetchBoard.writer ?? ""}
+          readOnly={Boolean(props.data?.fetchBoard.writer)}/>
           <S.Error>{props.errors.writer?.message}</S.Error>
         </S.InputWrapper>
         <S.InputWrapper>
@@ -35,7 +36,7 @@ export default function BoardWriteUI(props) {
           )} 
           onChange = {e => props.onChangeTitle(e)}
           type="text" placeholder="제목을 작성해주세요."
-          defaultValue={props.data?.title} />
+          defaultValue={props.data?.fetchBoard.title} />
           <S.Error>{props.errors.title?.message}</S.Error>
       </S.InputWrapper>
       <S.InputWrapper>
@@ -45,7 +46,7 @@ export default function BoardWriteUI(props) {
           )} 
           onChange={e => props.onChangeContents(e)}
           placeholder="내용을 작성해주세요."
-          defaultValue={props.data?.contents} />
+          defaultValue={props.data?.fetchBoard.contents} />
           <S.Error>{props.errors.contents?.message}</S.Error>
       </S.InputWrapper>
       <S.InputWrapper>

@@ -1,6 +1,7 @@
+import type { IBoardDetailUIProps } from "./BoardDetail.types";
 import * as S from "./BoardDetail.styles";
 
-export default function BoardDetailUI(props) {
+export default function BoardDetailUI(props: IBoardDetailUIProps): JSX.Element {
 
   return (
     <S.Wrapper>

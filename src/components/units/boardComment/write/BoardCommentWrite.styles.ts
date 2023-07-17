@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { IBoardCommentWriteStyleProps } from "./BoardCommentWrite.types";
 
 export const Wrapper = styled.div`
   width: 1200px;
@@ -58,7 +59,7 @@ export const ContentsLength = styled.div`
 export const Button = styled.button`
   width: 91px;
   height: 51px;
-  background-color: ${(props) => props.isEdit ? "#fa6400": "black"};
+  background-color: ${(props: IBoardCommentWriteStyleProps) => props.isEdit ? "#fa6400": "black"};
   color: white;
   cursor: pointer;
   margin: 5px;

@@ -1,6 +1,7 @@
 import * as S from "./BoardCommentWrite.styles";
+import { IBoardCommentWriteProps } from "./BoardCommentWrite.types";
 
-export default function BoardCommentWriteUI(props) {
+export default function BoardCommentWriteUI(props: IBoardCommentWriteProps) {
   return (
     <S.Wrapper>
       <>
@@ -13,7 +14,7 @@ export default function BoardCommentWriteUI(props) {
         <S.Input
           placeholder="작성자"
           onChange={props.onChangeWriter}
-          defaultValue={props.el?.writer}
+          defaultValue={props.el?.writer ?? ""}
           readOnly={props.isEdit}
         />
         <S.Input
@@ -31,7 +32,7 @@ export default function BoardCommentWriteUI(props) {
         />
         <S.BottomWrapper>
           <S.ContentsLength>{props.contents?props.contents.length:0}/100</S.ContentsLength>
-          {!props.isEdit ?<S.Button onClick={props.onClickWrite} isEdit={props.isEdit}>등록하기</S.Button>:<S.Button isEdit={props.isEdit} id={props.el._id} onClick={props.onClickUpdate}>수정하기</S.Button>}
+          {!props.isEdit ?<S.Button onClick={props.onClickWrite} isEdit={props.isEdit!}>등록하기</S.Button>:<S.Button isEdit={props.isEdit} id={props.el?._id} onClick={props.onClickUpdate}>수정하기</S.Button>}
         </S.BottomWrapper>
       </S.ContentsWrapper>
     </S.Wrapper>

@@ -2,7 +2,7 @@ import BoardDetailContainer from "../../../src/components/units/board/detail/Boa
 import BoardCommentWriteContainer from "../../../src/components/units/boardComment/write/BoardCommentWrite.contatiner";
 import BoardCommentListContainer from "../../../src/components/units/boardComment/list/BoardCommentList.contatiner";
 
-export default function BoardsDetailPage() {
+export default function BoardsDetailPage(): JSX.Element {
   return(
     <>
       <BoardDetailContainer />
