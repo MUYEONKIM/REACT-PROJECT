@@ -16,7 +16,7 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
   const [writer, setWriter] = useState('')
   const [password, setPassword] = useState('')
   const [contents, setContents] = useState('')
-  const [rating, setRating] = useState(0)
+  const [star, setStar] = useState(0)
 
   const onChangeWriter = (e: ChangeEvent<HTMLInputElement>): void => {
     setWriter(e.target.value)
@@ -30,9 +30,6 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
     setContents(e.target.value)
   }
 
-  // const onChangeRating = (e: ChangeEvent<HTMLDivElement>): void => {
-  //   setRating(e.target.value)
-  // }
   const onClickWrite = async (): Promise<void> => {
     try {
       if(typeof router.query.boardid !== "string") {
@@ -45,7 +42,7 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
             writer: writer,
             password: password,
             contents: contents,
-            rating: 0
+            rating: star
           },
           boardId: router.query.boardid
         }, 
@@ -80,7 +77,7 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
         variables: {
           updateBoardCommentInput: {
             contents: contents,
-            rating: 0
+            rating: star
           },
           password: password,
           boardCommentId: props.el?._id
@@ -94,8 +91,8 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
     } catch(error) {
       if (error instanceof Error) alert(error.message);
     }
-  }
-
+    setContents("")
+  };
 
   return <BoardCommentWriteUI
           onChangeWriter={onChangeWriter}
@@ -107,5 +104,6 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
           contents={contents}
           isEdit={props.isEdit}
           el = {props.el}
+          setStar = {setStar} 
           />
 }

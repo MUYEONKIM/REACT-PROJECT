@@ -15,4 +15,5 @@ export interface IBoardCommentWriteProps {
   contents?: string;
   isEdit: boolean | undefined;
   setIsEdit?: React.Dispatch<React.SetStateAction<boolean>> | undefined;
+  setStar? : React.Dispatch<React.SetStateAction<number>>
 }

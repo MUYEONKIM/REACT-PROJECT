@@ -1,5 +1,6 @@
 
 import styled from "@emotion/styled";
+import { Rate } from "antd";
 
 export const ItemWrapper = styled.div`
   width: 1200px;
@@ -53,4 +54,8 @@ export const DateString = styled.div`
   color: lightgray;
   padding-top: 15px;
   padding-left: 60px;
+`;
+
+export const Star = styled(Rate)`
+  padding-left: 20px;
 `;

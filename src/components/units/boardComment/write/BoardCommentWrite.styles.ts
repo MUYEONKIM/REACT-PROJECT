@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { IBoardCommentWriteStyleProps } from "./BoardCommentWrite.types";
+import { Rate } from "antd";
 
 export const Wrapper = styled.div`
   width: 1200px;
@@ -64,3 +65,5 @@ export const Button = styled.button`
   cursor: pointer;
   margin: 5px;
 `;
+
+export const Star = styled(Rate)``;

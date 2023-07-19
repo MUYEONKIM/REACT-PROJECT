@@ -51,6 +51,7 @@ export default function BoardCommentListUIitem(props: IMapProps): JSX.Element {
               <S.MainWrapper>
                 <S.WriterWrapper>
                   <S.Writer>{props.el.writer}</S.Writer>
+                  <S.Star value={props.el.rating} disabled />
                 </S.WriterWrapper>
                 <S.Contents>{props.el.contents}</S.Contents>
               </S.MainWrapper>
