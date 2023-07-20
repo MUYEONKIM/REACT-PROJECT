@@ -1,7 +1,7 @@
 import * as S from "./BoardWriter.styles";
-import { IBoardWritePropsUI } from "./BoardWriter.types";
+import type { IBoardWritePropsUI } from "./BoardWriter.types";
 
-export default function BoardWriteUI(props: IBoardWritePropsUI) {
+export default function BoardWriteUI(props: IBoardWritePropsUI): JSX.Element {
   return (
     <S.Wrapper onSubmit={props.isEdit? 
                         props.handleSubmit(props.onClickUpdate) : 

@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { CREATE_COMMENT, UPDATE_COMMENT } from "./BoardCommentWrite.queries";
 import { FETCH_COMMENTS } from "../list/BoardCommentList.queries";
-import type { IMutation, IMutationCreateBoardCommentArgs, IMutationUpdateBoardArgs, IMutationUpdateBoardCommentArgs } from "../../../../commons/types/generated/types";
+import type { IMutation, IMutationCreateBoardCommentArgs, IMutationUpdateBoardCommentArgs } from "../../../../commons/types/generated/types";
 import type { ChangeEvent } from "react";
 import BoardCommentWriteUI from "./BoardCommentWrite.presenter";
-import { IBoardCommentWriteProps } from "./BoardCommentWrite.types";
+import type { IBoardCommentWriteProps } from "./BoardCommentWrite.types";
 
 export default function BoardCommentWriteContainer(props: IBoardCommentWriteProps): JSX.Element {
   const router = useRouter()
@@ -39,9 +39,9 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
       await createBoardComment({
         variables: {
           createBoardCommentInput: {
-            writer: writer,
-            password: password,
-            contents: contents,
+            writer,
+            password,
+            contents,
             rating: star
           },
           boardId: router.query.boardid
@@ -76,10 +76,10 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
       await updateBoardComment({
         variables: {
           updateBoardCommentInput: {
-            contents: contents,
+            contents,
             rating: star
           },
-          password: password,
+          password,
           boardCommentId: props.el?._id
         },
         refetchQueries: [{

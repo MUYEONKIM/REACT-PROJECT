@@ -1,5 +1,5 @@
 import BoardCommentListUIitem from "./BoardCommentList.presenteritem";
-import { IBoardCommentPropUI } from "./BoardCommentList.types";
+import type { IBoardCommentPropUI } from "./BoardCommentList.types";
 
 export default function BoardCommentListUI(props: IBoardCommentPropUI): JSX.Element {
   return (

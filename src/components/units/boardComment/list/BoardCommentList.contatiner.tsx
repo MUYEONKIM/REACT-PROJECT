@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import BoardCommentListUI from "./BoardCommentList.presenter";
 import { FETCH_COMMENTS } from "./BoardCommentList.queries";
 import { useRouter } from "next/router";
-import { IQuery, IQueryFetchBoardCommentsArgs } from "../../../../commons/types/generated/types";
+import type { IQuery, IQueryFetchBoardCommentsArgs } from "../../../../commons/types/generated/types";
 
 export default function BoardCommentListContainer(): JSX.Element {
   const router = useRouter()

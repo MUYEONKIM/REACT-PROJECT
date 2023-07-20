@@ -1,5 +1,5 @@
-import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
-import { IQuery } from "../../../../commons/types/generated/types";
+import type { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
+import type { IQuery } from "../../../../commons/types/generated/types";
 import type { ChangeEvent } from "react";
 
 export interface ISubmitButtonProps {
@@ -21,7 +21,7 @@ export interface IBoardWritePropsUI {
   errors: any;
 }
 
-export type BoardData = {
+export interface BoardData {
   writer: string;
   password: string;
   title: string;

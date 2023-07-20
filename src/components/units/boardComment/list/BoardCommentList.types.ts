@@ -1,4 +1,4 @@
-import { IBoardComment, IQuery } from "../../../../commons/types/generated/types";
+import type { IBoardComment, IQuery } from "../../../../commons/types/generated/types";
 
 export interface IBoardCommentPropUI {
   data?: Pick<IQuery, "fetchBoardComments">;

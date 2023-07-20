@@ -1,5 +1,5 @@
 import type { ChangeEvent } from "react";
-import { IBoardComment } from "../../../../commons/types/generated/types";
+import type { IBoardComment } from "../../../../commons/types/generated/types";
 
 export interface IBoardCommentWriteStyleProps {
   isEdit: boolean;

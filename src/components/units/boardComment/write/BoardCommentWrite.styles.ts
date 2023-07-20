@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { IBoardCommentWriteStyleProps } from "./BoardCommentWrite.types";
+import type { IBoardCommentWriteStyleProps } from "./BoardCommentWrite.types";
 import { Rate } from "antd";
 
 export const Wrapper = styled.div`

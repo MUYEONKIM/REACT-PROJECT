@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import type { IMapProps } from './BoardCommentList.types';
-import { MouseEvent } from "react"
+import type { MouseEvent } from "react"
 import type { IMutation, IMutationDeleteBoardCommentArgs } from '../../../../commons/types/generated/types';
 
 export default function BoardCommentListUIitem(props: IMapProps): JSX.Element {
