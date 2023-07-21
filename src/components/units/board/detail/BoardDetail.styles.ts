@@ -124,3 +124,4 @@ export const DislikeCount = styled.div`
 `;
 
 export const LinkIcon = styled.img``;
+

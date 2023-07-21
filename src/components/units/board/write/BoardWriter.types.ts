@@ -15,10 +15,16 @@ export interface IBoardWritePropsUI {
   onChangeTitle: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeWriter: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeAddressDetail: (e: ChangeEvent<HTMLInputElement>) => void;
   onClickUpdate: (data: BoardData) => Promise<void>;
+  onClickAddressSearch: (e: any) => void;
+  isModalOpen: boolean;
   isActive: boolean;
   isEdit: boolean;
   errors: any;
+  onClickAddress: (data: any) => void
+  zipcode: string;
+  address: string;
 }
 
 export interface BoardData {
@@ -26,6 +32,7 @@ export interface BoardData {
   password: string;
   title: string;
   contents: string;
+  youtubeUrl: string;
 }
 
 export interface FormValue {

@@ -3,6 +3,12 @@ import type { IBoardWritePropsUI } from "./BoardWriter.types";
 
 export default function BoardWriteUI(props: IBoardWritePropsUI): JSX.Element {
   return (
+    <>
+    {props.isModalOpen && (
+    <S.AddressModal onCancel={props.onClickAddressSearch} visible={true}>
+      <S.AddressSearchInput onComplete={props.onClickAddress}/>
+    </S.AddressModal>
+    )}
     <S.Wrapper onSubmit={props.isEdit? 
                         props.handleSubmit(props.onClickUpdate) : 
                         props.handleSubmit(props.onValid)}>
@@ -52,11 +58,30 @@ export default function BoardWriteUI(props: IBoardWritePropsUI): JSX.Element {
       <S.InputWrapper>
         <S.Label>주소</S.Label>
         <S.ZipcodeWrapper>
-          <S.Zipcode {...props.register("boardAddress")} placeholder="07250" />
-          <S.SearchButton>우편번호 검색</S.SearchButton>
+          <S.Zipcode  
+                        placeholder="07250"
+                        readOnly
+                        value={
+                          props.zipcode !== ""
+                          ? props.zipcode
+                          : props.data?.fetchBoard.boardAddress?.zipcode ?? ""
+                        } />
+          <S.SearchButton onClick={props.onClickAddressSearch}>우편번호 검색</S.SearchButton>
         </S.ZipcodeWrapper>
-        <S.Address />
-        <S.Address />
+        <S.Address
+            readOnly
+            value={
+              props.address !== ""
+                ? props.address
+                : props.data?.fetchBoard.boardAddress?.address ?? ""
+            }
+          />
+          <S.Address
+            onChange={props.onChangeAddressDetail}
+            defaultValue={
+              props.data?.fetchBoard.boardAddress?.addressDetail ?? ""
+            }
+          />
       </S.InputWrapper>
       <S.InputWrapper>
         <S.Label>유튜브</S.Label>
@@ -81,5 +106,6 @@ export default function BoardWriteUI(props: IBoardWritePropsUI): JSX.Element {
           type="submit">{props.isEdit? "수정하기": "등록하기"}</S.SubmitButton>
       </S.ButtonWrapper>
     </S.Wrapper>
+    </>
   );
 }

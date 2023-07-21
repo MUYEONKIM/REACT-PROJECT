@@ -7,10 +7,15 @@ import { CREATE_BOARD, UPDATE_BOARD } from './BoardWriter.queries';
 import type { FormValue, BoardData, IBoardWritePropsUI } from './BoardWriter.types';
 import type {ChangeEvent} from "react"
 import type { IMutation, IMutationCreateBoardArgs, IMutationUpdateBoardArgs, IUpdateBoardInput } from '../../../../commons/types/generated/types';
+import type { Address } from 'react-daum-postcode';
 
 export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Element {
-  const router = useRouter()
-  const [isActive, setIsActive] = useState(true)
+  const router = useRouter();
+  const [isActive, setIsActive] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [address, setAddress] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [addressDetail, setAddressDetail] = useState("")
 
   const [createBoard] = useMutation<Pick<IMutation, "createBoard">, IMutationCreateBoardArgs>(CREATE_BOARD)
   const [updateBoard] = useMutation<Pick<IMutation, "updateBoard">, IMutationUpdateBoardArgs>(UPDATE_BOARD)
@@ -35,6 +40,22 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
    e.target.value && watch("password") && watch("title") && watch("writer") ? setIsActive(false) : setIsActive(true)
   }
 
+  const onChangeAddressDetail = (e: ChangeEvent<HTMLInputElement>): void => {
+    setAddressDetail(e.target.value)
+  }
+
+  const onClickAddressSearch = (e: any): void => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsModalOpen((prev) => !prev)
+  }
+
+  const onClickAddress = (data: Address): void => {
+    setAddress(data.address);
+    setZipcode(data.zonecode);
+    setIsModalOpen((prev) => !prev);
+  }
+
   const onValid = async (data: BoardData): Promise<void> => {
     try {
       const result = await createBoard({
@@ -44,10 +65,21 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
             title: data.title,
             password: data.password,
             contents: data.contents,
+            youtubeUrl: data.youtubeUrl,
+            boardAddress: 
+            {
+              zipcode,
+              address,
+              addressDetail,
+            },
           }
         }
       })
       alert("게시물이 정상적으로 등록되었습니다.")
+      if (result.data?.createBoard._id === undefined) {
+        alert("요청에 문제가 있습니다.");
+        return;
+      }
       void router.push(`/boards/${result.data?.createBoard._id}`)
     } catch(error: any) {
       alert(error.message)
@@ -80,11 +112,17 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
           password : data.password,
         }
       })
+      if (result.data?.updateBoard._id === undefined) {
+        alert("요청에 문제가 있습니다.");
+        return;
+      }
       void router.push(`/boards/${result.data?.updateBoard._id}`)
     } catch(error) {
       if (error instanceof Error) alert(error.message);
     }
   }
+
+
   return <BoardWriteUI 
     onValid = {onValid}
     register = {register}
@@ -94,9 +132,15 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
     onChangeTitle = {onChangeTitle}
     onChangePassword = {onChangePassword}
     onChangeWriter = {onChangeWriter}
+    onChangeAddressDetail = {onChangeAddressDetail}
     onClickUpdate = {onClickUpdate}
+    onClickAddressSearch = {onClickAddressSearch}
+    isModalOpen={isModalOpen}
     isActive={isActive}
     isEdit={props.isEdit}
     data = {props.data}
+    onClickAddress = {onClickAddress}
+    zipcode = {zipcode}
+    address = {address}
   />
 }

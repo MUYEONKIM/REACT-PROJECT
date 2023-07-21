@@ -20,11 +20,11 @@ export default function BoardDetailUI(props: IBoardDetailUIProps): JSX.Element {
           <S.Body>
             <S.Title>{props.data?.fetchBoard?.title}</S.Title>
             <S.Contents>{props.data?.fetchBoard?.contents}</S.Contents>
-            {props.data?.fetchBoard.youtubeUrl !== "" && (
+            {props.data?.fetchBoard?.youtubeUrl !== "" && (
             <S.Youtube
               url={props.data?.fetchBoard.youtubeUrl ?? ""}
-              width="486px"
-              height="240px"
+              width="600px"
+              height="330px"
             />
             )}
             <S.LikeWrapper>
