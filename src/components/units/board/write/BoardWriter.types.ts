@@ -25,6 +25,7 @@ export interface IBoardWritePropsUI {
   onClickAddress: (data: any) => void
   zipcode: string;
   address: string;
+  contextHolder: any;
 }
 
 export interface BoardData {

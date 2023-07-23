@@ -4,6 +4,7 @@ import type { IBoardWritePropsUI } from "./BoardWriter.types";
 export default function BoardWriteUI(props: IBoardWritePropsUI): JSX.Element {
   return (
     <>
+    {props.contextHolder}
     {props.isModalOpen && (
     <S.AddressModal onCancel={props.onClickAddressSearch} visible={true}>
       <S.AddressSearchInput onComplete={props.onClickAddress}/>

@@ -8,17 +8,59 @@ import type { FormValue, BoardData, IBoardWritePropsUI } from './BoardWriter.typ
 import type {ChangeEvent} from "react"
 import type { IMutation, IMutationCreateBoardArgs, IMutationUpdateBoardArgs, IUpdateBoardInput } from '../../../../commons/types/generated/types';
 import type { Address } from 'react-daum-postcode';
-
+import { message } from 'antd';
 export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Element {
   const router = useRouter();
   const [isActive, setIsActive] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [address, setAddress] = useState("");
   const [zipcode, setZipcode] = useState("");
-  const [addressDetail, setAddressDetail] = useState("")
+  const [addressDetail, setAddressDetail] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
 
   const [createBoard] = useMutation<Pick<IMutation, "createBoard">, IMutationCreateBoardArgs>(CREATE_BOARD)
   const [updateBoard] = useMutation<Pick<IMutation, "updateBoard">, IMutationUpdateBoardArgs>(UPDATE_BOARD)
+  const [isDoubleClick, setIsDoubleClick] = useState(false)
+  const successinfo = async (): Promise<void> => {
+    setIsDoubleClick(true)
+    try {
+      await messageApi.open({
+        type: 'success',
+        content: `게시물이 성공적으로 ${props.isEdit?"수정":"등록"}되었습니다`});
+    } catch(error) {
+      console.log(error)
+    }
+  };
+  const errorinfo = async (): Promise<void> => {
+    setIsDoubleClick(true)
+    try {
+      await messageApi.open({
+        type: 'error',
+        content: '게시물 등록이 실패하였습니다.'});
+    } catch(error) {
+      console.log(error)
+    }
+  };
+  const noinfo = async (): Promise<void> => {
+    setIsDoubleClick(true)
+    try {
+      await messageApi.open({
+        type: 'error',
+        content: '수정한 내용이 없습니다.'});
+    } catch(error) {
+      console.log(error)
+    }
+  };
+  const passwordinfo = async (): Promise<void> => {
+    setIsDoubleClick(true)
+    try {
+      await messageApi.open({
+        type: 'error',
+        content: '비밀번호를 입력해주세요.'});
+    } catch(error) {
+      console.log(error)
+    }
+  };
 
   const { 
     register,
@@ -57,6 +99,7 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
   }
 
   const onValid = async (data: BoardData): Promise<void> => {
+    if(isDoubleClick) return;
     try {
       const result = await createBoard({
         variables: {
@@ -75,25 +118,26 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
           }
         }
       })
-      alert("게시물이 정상적으로 등록되었습니다.")
       if (result.data?.createBoard._id === undefined) {
-        alert("요청에 문제가 있습니다.");
+        await errorinfo()
         return;
       }
+      await successinfo()
       void router.push(`/boards/${result.data?.createBoard._id}`)
     } catch(error: any) {
-      alert(error.message)
+      console.log(error.message)
     }
   }
 
   const onClickUpdate = async (data: BoardData): Promise<void> => {
+    if(isDoubleClick) return;
     if (!data.title && !data.contents) {
-      alert("수정한 내용이 없습니다.");
+      await noinfo();
       return;
     }
 
     if (!data.password) {
-      alert("비밀번호를 입력해주세요.");
+      await passwordinfo();
       return;
     }
 
@@ -102,7 +146,7 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
     if (data.contents) updataBoardInput.contents = data.contents;
     try {
       if (typeof router.query.boardid !== "string") {
-        alert("시스템에 문제가 있습니다.");
+        await errorinfo();
         return;
       }
       const result = await updateBoard({
@@ -113,12 +157,13 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
         }
       })
       if (result.data?.updateBoard._id === undefined) {
-        alert("요청에 문제가 있습니다.");
+        await errorinfo();
         return;
       }
+      await successinfo();
       void router.push(`/boards/${result.data?.updateBoard._id}`)
     } catch(error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) console.log(error.message);
     }
   }
 
@@ -142,5 +187,6 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
     onClickAddress = {onClickAddress}
     zipcode = {zipcode}
     address = {address}
+    contextHolder = {contextHolder}
   />
 }
