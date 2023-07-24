@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { CREATE_COMMENT, UPDATE_COMMENT } from "./BoardCommentWrite.queries";
 import { FETCH_COMMENTS } from "../list/BoardCommentList.queries";
