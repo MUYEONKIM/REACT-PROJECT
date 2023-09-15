@@ -13,22 +13,36 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
   const [createBoardComment] = useMutation<Pick<IMutation, "createBoardComment">,IMutationCreateBoardCommentArgs>(CREATE_COMMENT)
   const [updateBoardComment] = useMutation<Pick<IMutation, "updateBoardComment">, IMutationUpdateBoardCommentArgs>(UPDATE_COMMENT)
 
-  const [writer, setWriter] = useState('')
-  const [password, setPassword] = useState('')
-  const [contents, setContents] = useState('')
-  const [star, setStar] = useState(0)
+  // const [writer, setWriter] = useState('')
+  // const [password, setPassword] = useState('')
+  // const [contents, setContents] = useState('')
+  const [rating, setRating] = useState(0)
 
-  const onChangeWriter = (e: ChangeEvent<HTMLInputElement>): void => {
-    setWriter(e.target.value)
-  }
+  const [ inputs, setInputs ] = useState({
+    writer: "",
+    password: "",
+    contents: "",
+  })
 
-  const onChangePassword = (e: ChangeEvent<HTMLInputElement>): void => {
-    setPassword(e.target.value)
-  }
+  // const onChangeWriter = (e: ChangeEvent<HTMLInputElement>): void => {
+  //   setWriter(e.target.value)
+  // }
 
-  const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-    setContents(e.target.value)
-  }
+  // const onChangePassword = (e: ChangeEvent<HTMLInputElement>): void => {
+  //   setPassword(e.target.value)
+  // }
+
+  // const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>): void => {
+  //   setContents(e.target.value)
+  // }
+  
+
+  const onChangeInput = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> ): void => {
+    setInputs({
+      ...inputs,
+      [event.target.id]: event.target.value
+    });
+  };
 
   const onClickWrite = async (): Promise<void> => {
     try {
@@ -39,10 +53,12 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
       await createBoardComment({
         variables: {
           createBoardCommentInput: {
-            writer,
-            password,
-            contents,
-            rating: star
+            // writer,
+            // password,
+            // contents,
+            // rating: star
+            ...inputs,
+            rating
           },
           boardId: router.query.boardid
         }, 
@@ -53,7 +69,6 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
           }
         ]
       })
-      setContents('')
     } catch(error) {
       if (error instanceof Error) alert(error.message);
     }
@@ -65,21 +80,21 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
         alert("시스템에 문제가 있습니다.");
         return;
       }
-      if (!contents) {
+      if (!inputs.contents) {
         alert("내용이 수정되지 않았습니다.")
         return;
       }
-      if (!password) {
+      if (!inputs.password) {
         alert("비밀번호가 입력되지 않았습니다.")
         return;
       }
       await updateBoardComment({
         variables: {
           updateBoardCommentInput: {
-            contents,
-            rating: star
+            contents: inputs.contents,
+            rating
           },
-          password,
+          password: inputs.password,
           boardCommentId: props.el?._id
         },
         refetchQueries: [{
@@ -91,19 +106,20 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
     } catch(error) {
       if (error instanceof Error) alert(error.message);
     }
-    setContents("")
   };
 
   return <BoardCommentWriteUI
-          onChangeWriter={onChangeWriter}
-          onChangePassword={onChangePassword}
-          onChangeContents={onChangeContents}
+          // onChangeWriter={onChangeWriter}
+          // onChangePassword={onChangePassword}
+          // onChangeContents={onChangeContents}
           // onChangeRating={onChangeRating}
+          onChangeInput = {onChangeInput}
           onClickWrite={onClickWrite}
           onClickUpdate={onClickUpdate}
-          contents={contents}
+          // contents={contents}
+          setRating = {setRating} 
+          inputs = {inputs}
           isEdit={props.isEdit}
           el = {props.el}
-          setStar = {setStar} 
           />
 }
