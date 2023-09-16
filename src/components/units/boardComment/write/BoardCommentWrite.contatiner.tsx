@@ -112,7 +112,6 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
           // onChangeWriter={onChangeWriter}
           // onChangePassword={onChangePassword}
           // onChangeContents={onChangeContents}
-          // onChangeRating={onChangeRating}
           onChangeInput = {onChangeInput}
           onClickWrite={onClickWrite}
           onClickUpdate={onClickUpdate}
