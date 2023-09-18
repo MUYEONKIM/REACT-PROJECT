@@ -16,6 +16,7 @@ export interface IBoardWritePropsUI {
   onChangePassword: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeWriter: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeAddressDetail: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChnageFileUrls: (fileUrl : string, index: number) => void;
   onClickUpdate: (data: BoardData) => Promise<void>;
   onClickAddressSearch: (e: any) => void;
   isModalOpen: boolean;
@@ -26,6 +27,7 @@ export interface IBoardWritePropsUI {
   zipcode: string;
   address: string;
   contextHolder: any;
+  fileUrls: string[];
 }
 
 export interface BoardData {

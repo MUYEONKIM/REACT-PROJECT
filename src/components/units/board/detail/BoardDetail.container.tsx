@@ -3,12 +3,9 @@ import { useRouter } from "next/router";
 import BoardDetailUI from "./BoardDetail.presenter";
 import { FETCH_BOARD, DELETE_BOARD, LIKE_BOARD, DISLIKE_BOARD } from "./BoardDetail.queries";
 import type { IMutation, IMutationDeleteBoardArgs, IMutationDislikeBoardArgs, IMutationLikeBoardArgs, IQuery, IQueryFetchBoardArgs } from "../../../../commons/types/generated/types";
-import { useState } from "react";
-
 
 export default function BoardDetailContainer(): JSX.Element {
   const router = useRouter()
-  const [isLike, setIsLike] = useState(false)
 
   if (typeof router.query.boardid !== "string") return <></>;
 
@@ -53,11 +50,10 @@ export default function BoardDetailContainer(): JSX.Element {
 
   const onClickLike = async (): Promise<void> => {
     try {
-      if (typeof router.query.boardid !== "string" || isLike) {
+      if (typeof router.query.boardid !== "string") {
         alert("시스템에 문제가 있습니다.")
         return;
       }
-      setIsLike(true)
       await likeBoard({
         variables : {boardId: router.query.boardid},
         refetchQueries : [
@@ -74,11 +70,10 @@ export default function BoardDetailContainer(): JSX.Element {
 
   const onClickDislike = async (): Promise<void> => {
     try {
-      if (typeof router.query.boardid !== "string" || isLike) {
+      if (typeof router.query.boardid !== "string") {
         alert("시스템에 문제가 있습니다.")
         return;
       }
-      setIsLike(true)
       await dislikeBoard({
         variables : {boardId: router.query.boardid},
         refetchQueries : [

@@ -17,6 +17,7 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
   const [zipcode, setZipcode] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
+  const [fileUrls, setFileUrls] = useState(["", "", ""]);
 
   const [createBoard] = useMutation<Pick<IMutation, "createBoard">, IMutationCreateBoardArgs>(CREATE_BOARD)
   const [updateBoard] = useMutation<Pick<IMutation, "updateBoard">, IMutationUpdateBoardArgs>(UPDATE_BOARD)
@@ -71,32 +72,38 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
 
   const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
    e.target.value && watch("password") && watch("title") && watch("contents") ? setIsActive(false) : setIsActive(true)
-  }
+  };
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
    e.target.value && watch("writer") && watch("title") && watch("contents") ? setIsActive(false) : setIsActive(true)
-  }
+  };
   const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
    e.target.value && watch("password") && watch("writer") && watch("contents") ? setIsActive(false) : setIsActive(true)
-  }
+  };
   const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>) => {
    e.target.value && watch("password") && watch("title") && watch("writer") ? setIsActive(false) : setIsActive(true)
-  }
+  };
 
   const onChangeAddressDetail = (e: ChangeEvent<HTMLInputElement>): void => {
     setAddressDetail(e.target.value)
-  }
+  };
 
   const onClickAddressSearch = (e: any): void => {
     e.preventDefault();
     e.stopPropagation();
     setIsModalOpen((prev) => !prev)
-  }
+  };
 
   const onClickAddress = (data: Address): void => {
     setAddress(data.address);
     setZipcode(data.zonecode);
     setIsModalOpen((prev) => !prev);
-  }
+  };
+
+  const onChnageFileUrls = (fileUrl : string, index: number): void => {
+    const newFileUrls = [...fileUrls];
+    newFileUrls[index] = fileUrl;
+    setFileUrls(newFileUrls);
+  };
 
   const onValid = async (data: BoardData): Promise<void> => {
     if(isDoubleClick) return;
@@ -115,6 +122,7 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
               address,
               addressDetail,
             },
+            images: [...fileUrls],
           }
         }
       })
@@ -180,6 +188,8 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
     onChangeAddressDetail = {onChangeAddressDetail}
     onClickUpdate = {onClickUpdate}
     onClickAddressSearch = {onClickAddressSearch}
+    onChnageFileUrls = {onChnageFileUrls}
+    fileUrls = {fileUrls}
     isModalOpen={isModalOpen}
     isActive={isActive}
     isEdit={props.isEdit}

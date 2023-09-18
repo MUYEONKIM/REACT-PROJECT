@@ -125,3 +125,13 @@ export const DislikeCount = styled.div`
 
 export const LinkIcon = styled.img``;
 
+export const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Image = styled.img`
+  width: 996px;
+  height: 480px;
+  margin-bottom: 30px;
+`;
