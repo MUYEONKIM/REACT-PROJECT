@@ -1,11 +1,17 @@
 import { getDate } from "../../../../commons/libraries/utils";
 import Paginations01 from "../../../commons/pagnation/pagnation.contatiner";
+import SearchBar from "../../../commons/search/search.container";
 import * as S from "./Boardlist.style";
 import type { IBoardlistUIProps } from "./Boardlist.types";
 
 export default function BoardListUI(props: IBoardlistUIProps): JSX.Element {
   return (
     <S.Wrapper>
+      <SearchBar 
+        refetch={props.refetch}
+        refetchBoardsCount = {props.refetchBoardsCount}
+        onChangeKeyword = {props.onChangeKeyword}
+      />
       <S.TableTop />
       <S.Row>
         <S.ColumnHeaderBasic>ID</S.ColumnHeaderBasic>
