@@ -29,7 +29,7 @@ export const LeftContents = styled.article`
   border: 1px solid;
   padding: 30px;
 `
-export const InputSpan = styled.span`
+export const InputP = styled.p`
   margin-bottom: 10px;
 `
 
@@ -38,4 +38,9 @@ export const Idbox = styled.input`
 
 export const InputWrapper = styled.article`
   margin-bottom: 10px;
+`
+
+export const ErrorMessage = styled.p`
+  color: red;
+  margin-top: 0.3em;
 `
