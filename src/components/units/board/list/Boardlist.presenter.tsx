@@ -3,6 +3,8 @@ import Paginations01 from "../../../commons/pagnation/pagnation.contatiner";
 import SearchBar from "../../../commons/search/search.container";
 import * as S from "./Boardlist.style";
 import type { IBoardlistUIProps } from "./Boardlist.types";
+import {v4 as uuidv4} from "uuid"
+const SECRET = "!@#"
 
 export default function BoardListUI(props: IBoardlistUIProps): JSX.Element {
   return (
@@ -25,7 +27,15 @@ export default function BoardListUI(props: IBoardlistUIProps): JSX.Element {
             {String(el._id).slice(-4).toUpperCase()}
           </S.ColumnBasic>
           <S.ColumnTitle id={el._id} onClick={props.onClickMoveToBoardDetail}>
-            {el.title}
+            {el.title.replaceAll( props.keyword as string, `${SECRET}${props.keyword as string}${SECRET}`)
+            .split(SECRET).map(el => (
+              <S.TextToken
+                key={uuidv4()}
+                isMatched={props.keyword === el}
+              >
+                {el}
+              </S.TextToken>
+            ))}
           </S.ColumnTitle>
           <S.ColumnBasic>{el.writer}</S.ColumnBasic>
           <S.ColumnBasic>{getDate(el.createdAt)}</S.ColumnBasic>

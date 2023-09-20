@@ -16,3 +16,7 @@ export interface IBoardlistUIProps {
   keyword?: string;
   onChangeKeyword: (value: string) => void; 
 }
+
+export interface ITextTokenProps {
+  isMatched: boolean;
+}
