@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
-import type { ITextTokenProps } from "./Boardlist.types";
+
+interface ITextToken {
+  isMatched : boolean
+}
 
 export const Wrapper = styled.div`
   width: 1200px;
@@ -78,5 +81,5 @@ export const Button = styled.button`
 `;
 
 export const TextToken = styled.span`
-  color: ${(props: ITextTokenProps) => (props.isMatched ? "red" : "black")};
+  color: ${(props: ITextToken) => (props.isMatched ? "red" : "black")};
 `;

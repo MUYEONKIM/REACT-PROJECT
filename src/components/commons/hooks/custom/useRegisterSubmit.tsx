@@ -1,6 +1,7 @@
 import { Modal } from "antd";
 import { useMutationCreateUser } from "../mutations/useMutationRegister"
 import * as yup from "yup"
+import { useRouter } from "next/router";
 
 export interface RegisterData {
   email: string
@@ -16,13 +17,14 @@ export const schema = yup.object({
   passwordConfirm: yup.string().oneOf([yup.ref('password'), ''], '비밀번호가 일치하지 않습니다.')
 })
 
-export const RegisterSubmit = () => {
+export const useRegisterSubmit = () => {
   const [ RegisterUser ] = useMutationCreateUser();
+  const router = useRouter();
 
   const Register = async (data: RegisterData): Promise<void> => {
     console.log(yup.ref('email'))
     try {
-      const result = await RegisterUser({
+      await RegisterUser({
         variables: {
           createUserInput : {
             email: data.email,
@@ -31,7 +33,8 @@ export const RegisterSubmit = () => {
           }
         }
       });
-      console.log(result)
+      Modal.success({content: "회원가입을 축하드립니다"})
+      void router.push("/login")
     } catch(error: any){
       Modal.error({ content: error.message});
     }

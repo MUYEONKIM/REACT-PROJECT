@@ -1,8 +1,8 @@
 
 import { useRouter } from "next/router";
-import LayoutBanner from "./banner/banner.container";
-import LayoutHeader from "./header/header.container";
-import LayoutNavigation from "./navigation/navigation.container";
+import LayoutBanner from "./banner/banner.index";
+import LayoutHeader from "./header/header.index";
+import LayoutNavigation from "./navigation/navigation.index";
 import styled from "@emotion/styled";
 
 const Body = styled.div`

@@ -5,7 +5,7 @@ import {
 } from "./search.styles";
 import type { ISearchUIProps } from "./search.types";
 
-export default function SearchUI(props: ISearchUIProps): JSX.Element {
+export default function SearchBar(props: ISearchUIProps): JSX.Element {
   return (
     <Searchbar>
       <FireFilledIcon />

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import * as L from "./login.styles";
 import { useForm } from "react-hook-form";
-import { LoginSubmit, schema } from "../../commons/hooks/custom/useLoginSubmit";
+import { useLoginSubmit, schema } from "../../commons/hooks/custom/useLoginSubmit";
 import type { LoginData } from "../../commons/hooks/custom/useLoginSubmit";
 import type { SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,7 +12,7 @@ export default function Login(): JSX.Element {
     mode: "onChange"
   });
 
-  const Login: SubmitHandler<LoginData> = LoginSubmit();
+  const Login: SubmitHandler<LoginData> = useLoginSubmit();
 
   return (
     <L.LoginWrapper onSubmit={handleSubmit(Login)}>

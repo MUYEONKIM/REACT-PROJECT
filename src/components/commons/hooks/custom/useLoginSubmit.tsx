@@ -13,7 +13,7 @@ export const schema = yup.object({
   password: yup.string().required("비밀번호를 입력해주세요.")
 })
 
-export const LoginSubmit = () => {
+export const useLoginSubmit = () => {
   const [loginUser] = useMutationLoginUser();
 
   const router = useRouter();

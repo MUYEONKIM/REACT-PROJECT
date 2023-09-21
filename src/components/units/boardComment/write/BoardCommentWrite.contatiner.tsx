@@ -102,7 +102,6 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
           variables: { boardId: router.query.boardid }
         },],
       })
-      props.setIsEdit!(curr => !curr)
     } catch(error) {
       if (error instanceof Error) alert(error.message);
     }
@@ -118,7 +117,6 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
           // contents={contents}
           setRating = {setRating} 
           inputs = {inputs}
-          isEdit={props.isEdit}
           el = {props.el}
           />
 }

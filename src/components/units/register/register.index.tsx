@@ -1,7 +1,7 @@
 import Link from "next/link";
 import * as R from "./register.styles";
 import { useForm } from "react-hook-form";
-import { RegisterSubmit, schema } from "../../commons/hooks/custom/useRegisterSubmit";
+import { useRegisterSubmit, schema } from "../../commons/hooks/custom/useRegisterSubmit";
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { RegisterData } from "../../commons/hooks/custom/useRegisterSubmit";
 import type { SubmitHandler } from "react-hook-form";
@@ -13,7 +13,7 @@ export default function Register(): JSX.Element {
     mode: "onChange"
   });
 
-  const Register: SubmitHandler<RegisterData> = RegisterSubmit();
+  const Register: SubmitHandler<RegisterData> = useRegisterSubmit();
 
   return (
       <R.RegisterWrapper onSubmit={handleSubmit(Register)}>
