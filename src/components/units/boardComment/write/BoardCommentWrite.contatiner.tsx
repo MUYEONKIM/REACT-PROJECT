@@ -105,6 +105,7 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
     } catch(error) {
       if (error instanceof Error) alert(error.message);
     }
+    
   };
 
   return <BoardCommentWriteUI
