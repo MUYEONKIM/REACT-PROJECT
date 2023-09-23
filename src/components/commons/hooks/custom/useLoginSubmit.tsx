@@ -2,6 +2,10 @@ import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useMutationLoginUser } from "../mutations/useMutationLoginUser";
 import * as yup from "yup"
+import { useRecoilState } from "recoil";
+import { accessTokenState } from "../../../../commons/stores";
+import { useQueryFetchUser } from "../queries/useQueryFetchUser";
+import { useMoveToPage } from "./useMovetoPage";
 
 export interface LoginData {
   email: string;
@@ -14,9 +18,9 @@ export const schema = yup.object({
 })
 
 export const useLoginSubmit = () => {
+  const [ , setAccessToken] = useRecoilState(accessTokenState)
   const [loginUser] = useMutationLoginUser();
-
-  const router = useRouter();
+  const onClickMoveToPage = useMoveToPage();
 
   const Login = async (data: LoginData): Promise<void> => {
     try {
@@ -27,8 +31,9 @@ export const useLoginSubmit = () => {
         }
       });
       if(!result.data) return;
+      setAccessToken(result.data.loginUser.accessToken);
       localStorage.setItem("accessToken", result.data.loginUser.accessToken);
-      void router.push('/')
+      onClickMoveToPage("/")()
     } catch(error: any) {
       Modal.error({content: error.message});
     };

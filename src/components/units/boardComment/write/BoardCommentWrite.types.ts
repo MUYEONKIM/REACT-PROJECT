@@ -20,8 +20,8 @@ export interface IBoardCommentWriteProps {
   onClickWrite?: () => Promise<void>;
   onClickUpdate?: () => Promise<void>;
   // contents?: string;
-  setRating? : React.Dispatch<React.SetStateAction<number>>
+  setRating? : React.Dispatch<React.SetStateAction<number>>;
   inputs?: Iinputs
-  isEdit: boolean | undefined;
-  setIsEdit?: React.Dispatch<React.SetStateAction<boolean>> | undefined;
+  isEdit?: boolean;
+  setIsEdit?: React.Dispatch<React.SetStateAction<boolean>> ;
 }

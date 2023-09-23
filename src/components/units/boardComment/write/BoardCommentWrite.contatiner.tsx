@@ -23,7 +23,6 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
     password: "",
     contents: "",
   })
-
   // const onChangeWriter = (e: ChangeEvent<HTMLInputElement>): void => {
   //   setWriter(e.target.value)
   // }
@@ -43,7 +42,6 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
       [event.target.id]: event.target.value
     });
   };
-
   const onClickWrite = async (): Promise<void> => {
     try {
       if(typeof router.query.boardid !== "string") {
@@ -102,13 +100,16 @@ export default function BoardCommentWriteContainer(props: IBoardCommentWriteProp
           variables: { boardId: router.query.boardid }
         },],
       })
+      if (!props.setIsEdit) return;
+      props.setIsEdit(curr => !curr)
     } catch(error) {
       if (error instanceof Error) alert(error.message);
     }
-    
+
   };
 
   return <BoardCommentWriteUI
+          isEdit = {props.isEdit}
           // onChangeWriter={onChangeWriter}
           // onChangePassword={onChangePassword}
           // onChangeContents={onChangeContents}
