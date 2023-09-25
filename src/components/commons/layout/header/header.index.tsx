@@ -1,17 +1,43 @@
 import { useRecoilState } from "recoil";
 import { useMoveToPage } from "../../hooks/custom/useMovetoPage";
 import {
+  Avatar,
   InnerButton,
   InnerLogo,
   InnerWrapper,
+  Profile,
+  ProfileFunction,
+  ProfileSpan,
   Wrapper,
 } from "./header.styles";
 import { accessTokenState } from "../../../../commons/stores";
+import { Popover } from "antd";
+import { useQueryFetchUser } from "../../hooks/queries/useQueryFetchUser";
+import { LogoutOutlined } from "@ant-design/icons";
 
 export default function LayoutHeader(): JSX.Element {
-  const [ accessToken ] = useRecoilState(accessTokenState);
+  const [ accessToken, setAccessToken ] = useRecoilState(accessTokenState);
   const onClickMoveToPage = useMoveToPage();
-  console.log(accessToken)
+  const LOGOUT = () => {
+    localStorage.removeItem("accessToken")
+    setAccessToken("")
+    console.log(localStorage.getItem("accessToken"))
+  }
+  const { data } = useQueryFetchUser();
+  const text = (
+    <Profile>
+      <Avatar src="/board/profile.png" />
+      <ProfileSpan>{data?.fetchUserLoggedIn.name}</ProfileSpan>
+    </Profile>
+  )
+  const content = (
+    <ProfileFunction onClick={LOGOUT}>
+      <ProfileSpan >
+        <LogoutOutlined/>
+      </ProfileSpan>
+      <ProfileSpan>로그아웃</ProfileSpan>
+    </ProfileFunction>
+  );
   return (
     <Wrapper>
       <InnerWrapper>
@@ -19,7 +45,9 @@ export default function LayoutHeader(): JSX.Element {
         <div>
           {accessToken?(
             <>
-              로그인했지롱
+              <Popover placement="leftTop" title={text} content={content} trigger="click">
+                <Avatar src="/board/profile.png"/>      
+              </Popover>
             </>
           ): (
             <>

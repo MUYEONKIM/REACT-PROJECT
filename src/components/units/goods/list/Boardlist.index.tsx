@@ -1,10 +1,8 @@
-import { Card } from "antd";
 import { getDate } from "../../../../commons/libraries/utils";
 import { useMoveToPage } from "../../../commons/hooks/custom/useMovetoPage";
 import useSearchBar from "../../../commons/hooks/custom/useSearchBar";
 import { useQueryBoardCount } from "../../../commons/hooks/queries/useQueryBoardCount";
 import { useQueryFetchBoards } from "../../../commons/hooks/queries/useQueryFetchBoards";
-import { useQueryFetchBoardsOfTheBest } from "../../../commons/hooks/queries/useQueryFetchBoardsOfTheBest";
 import Paginations01 from "../../../commons/pagnation/pagnation.contatiner";
 import SearchBar from "../../../commons/search/search.index";
 import * as S from "./Boardlist.style";
@@ -13,41 +11,15 @@ const SECRET = "!@#"
 
 export default function BoardList(): JSX.Element {
   const { data, refetch } = useQueryFetchBoards();
-  const { data: dataBest } = useQueryFetchBoardsOfTheBest();
   const { data: dataBoardsCount, refetch: refetchBoardsCount } = useQueryBoardCount();
   const { keyword, onChangeSearch } =  useSearchBar({
     refetch, refetchBoardsCount
   });
-  const { Meta } = Card;
-  console.log(dataBest)
+
   const onClickMoveToPage = useMoveToPage();
-  console.log(dataBest?.fetchBoardsOfTheBest)
+  
   return (
     <S.Wrapper>
-      <S.BestWrapper>
-        {dataBest?.fetchBoardsOfTheBest.map((el) => (
-          <S.BestBoardCard
-            onClick={onClickMoveToPage(`/boards/${el._id}`)}
-            key={el._id}
-            hoverable
-            cover = {<S.BestBoardImg src={el.images?.[0] ?`https://storage.googleapis.com/${el.images[0]}` : "/board/profile.png"} />}
-            >
-              <Meta 
-                title={el.title}
-              />
-              <S.BestSection>
-                <S.BestContent>
-                  <S.BoardP>{el.writer}</S.BoardP>
-                  <S.BoardP>{getDate(el.createdAt)}</S.BoardP>
-                </S.BestContent>
-                <S.BestContent>
-                  <S.LikeIcon />
-                  <S.BoardP>{el.likeCount}</S.BoardP>
-                </S.BestContent>
-              </S.BestSection>
-          </S.BestBoardCard>
-        ))}
-      </S.BestWrapper>
       <SearchBar 
         onChangeKeyword = {onChangeSearch}
       />

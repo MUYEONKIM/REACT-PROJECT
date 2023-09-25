@@ -1,10 +1,8 @@
 import { Modal } from "antd";
-import { useRouter } from "next/router";
 import { useMutationLoginUser } from "../mutations/useMutationLoginUser";
 import * as yup from "yup"
 import { useRecoilState } from "recoil";
 import { accessTokenState } from "../../../../commons/stores";
-import { useQueryFetchUser } from "../queries/useQueryFetchUser";
 import { useMoveToPage } from "./useMovetoPage";
 
 export interface LoginData {

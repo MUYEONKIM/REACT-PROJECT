@@ -3,16 +3,17 @@ import { gql, useQuery } from "@apollo/client"
 
 export const FETCH_USER = gql`
   query fetchUserLoggedIn {
-    fetchUserLoggenIn {
-      id
+    fetchUserLoggedIn {
+      _id
       email
       name
+      picture
     }
   }
-`
+`;
 
 export const useQueryFetchUser = () => {
   const query = useQuery(FETCH_USER);
 
-  return query
+  return query;
 }

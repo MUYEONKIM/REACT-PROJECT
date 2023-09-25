@@ -1,6 +1,4 @@
-import { LikeOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
-import { Card } from "antd";
 
 interface ITextToken {
   isMatched : boolean
@@ -10,44 +8,6 @@ export const Wrapper = styled.div`
   width: 1200px;
   margin: 100px;
 `;
-
-export const BestWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 50px;
-`
-
-export const BestBoardImg = styled.img`
-  max-width: 240px;
-  max-height: 140px;
-  min-height: 140px;
-
-`
-export const LikeIcon = styled(LikeOutlined)`
-  font-size: 20px;
-  color: #ffd600;
-  cursor: pointer;
-`;
-
-export const BestSection = styled.section`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 20px;
-`
-
-export const BoardP = styled.p`
-  margin-top: 3px;
-`
-
-export const BestContent = styled.div`
-
-`
-
-export const BestBoardCard = styled(Card)`
-  width: 240PX;
-`
 
 export const TableTop = styled.div`
   border-top: 2px solid gray;

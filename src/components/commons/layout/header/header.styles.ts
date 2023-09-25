@@ -32,3 +32,25 @@ export const InnerButton = styled.span`
   color: #5729ff;
   cursor: pointer;
 `;
+
+export const Avatar = styled.img`
+  width: 48px;
+  height: 48px;
+`;
+
+export const Profile = styled.section`
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1.5px solid;
+  padding: 10px;
+`
+
+export const ProfileFunction = styled.section`
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+`
+
+export const ProfileSpan = styled.span`
+  margin-left: 18px;
+`
