@@ -1,4 +1,4 @@
-import * as S from "./BoardDetail.styles";
+import * as S from "./GoodsDetail.styles";
 import { Tooltip } from "antd";
 import { getDate } from "../../../../commons/libraries/utils";
 import { useQueryFetchBoard } from "../../../commons/hooks/queries/useQueryFetchBoard";
@@ -8,7 +8,7 @@ import { useDislikeBoard } from "../../../commons/hooks/custom/useDislikeBoard";
 import { useMoveToPage } from "../../../commons/hooks/custom/useMovetoPage";
 import { useDeleteBoard } from "../../../commons/hooks/custom/useDeleteBoard";
 
-export default function BoardDetail(): JSX.Element {
+export default function GoodsDetail(): JSX.Element {
   const {id} = useCheckId("boardid");
   const {data} = useQueryFetchBoard({boardId : id});
   const onClickLike = useLikeBoard(id);
@@ -70,8 +70,8 @@ export default function BoardDetail(): JSX.Element {
           </S.Body>
         </S.CardWrapper>
         <S.BottomWrapper>
-          <S.Button onClick={onClickMoveToPage("/boards")}>목록</S.Button>
-          <S.Button onClick={onClickMoveToPage(`/boards/${id}/edit`)}>수정</S.Button>
+          <S.Button onClick={onClickMoveToPage("/markets")}>목록</S.Button>
+          <S.Button onClick={onClickMoveToPage(`/markets/${id}/edit`)}>수정</S.Button>
           <S.Button onClick={onClickDelete}>삭제</S.Button>
         </S.BottomWrapper>
       </S.Wrapper>
