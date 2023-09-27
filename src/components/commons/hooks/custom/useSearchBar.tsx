@@ -1,15 +1,21 @@
 import _ from 'lodash'
-import type { IQuery, IQueryFetchBoardsArgs } from "../../../../commons/types/generated/types";
+import type { IQuery, IQueryFetchBoardsArgs, IQueryFetchUseditemsArgs } from "../../../../commons/types/generated/types";
 import type { ApolloQueryResult, OperationVariables } from "@apollo/client";
 import { useState } from 'react';
 
+type RefetchBoards = (
+  variables?: Partial<IQueryFetchBoardsArgs> | undefined
+) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoards">>>;
+
+type RefetchUseditems = (
+  variables?: Partial<IQueryFetchUseditemsArgs> | undefined
+) => Promise<ApolloQueryResult<Pick<IQuery, "fetchUseditems">>>;
+
 interface ISearchUIProps {
-  refetch: (
-    variables?: Partial<IQueryFetchBoardsArgs> | undefined
-  ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoards">>>;
+  refetch: RefetchBoards | RefetchUseditems;
   count? : number;
 
-  refetchBoardsCount: (
+  refetchBoardsCount?: (
     variables: Partial<OperationVariables>
   ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoardsCount">>>;
 }
@@ -19,7 +25,9 @@ export default function useSearchBar(props: ISearchUIProps) {
   
   const getDebounce = _.debounce((value: string) => {
     void props.refetch({search: value, page:1})
-    void props.refetchBoardsCount({search: value})
+    if (props.refetchBoardsCount) {
+      void props.refetchBoardsCount({search: value})
+    }
     setKeyword(value)
   }, 500);
 

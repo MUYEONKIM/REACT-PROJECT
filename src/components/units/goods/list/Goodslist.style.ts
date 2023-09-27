@@ -1,13 +1,9 @@
-import { LikeOutlined } from "@ant-design/icons";
+import { HeartFilled, LikeOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { Card } from "antd";
 
-interface ITextToken {
-  isMatched : boolean
-}
-
 export const Wrapper = styled.div`
-  width: 1200px;
+  width: 1000px;
   margin: 100px;
 `;
 
@@ -22,13 +18,34 @@ export const BestBoardImg = styled.img`
   max-width: 240px;
   max-height: 140px;
   min-height: 140px;
-
 `
 export const LikeIcon = styled(LikeOutlined)`
   font-size: 20px;
   color: #ffd600;
   cursor: pointer;
 `;
+
+export const HeartIcon = styled(HeartFilled)`
+  font-size: 20px;
+  color: #ffd600;
+  cursor: pointer;
+`
+
+export const Table = styled.article`
+  height: 700px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+  display: none;
+  }
+`
+
+export const LikeSection = styled.section`
+  display: flex;
+  width: 70px;
+  justify-content: space-between;
+  margin-top: auto;
+`
 
 export const BestSection = styled.section`
   display: flex;
@@ -37,12 +54,54 @@ export const BestSection = styled.section`
   margin-top: 20px;
 `
 
+export const BoardRemarks = styled.p`
+  color: gray;
+  font-size: 0.8rem;
+`
+export const BoardPrice = styled.p`
+  margin-top: 5px;
+  font-weight: bolder;
+`
+
 export const BoardP = styled.p`
   margin-top: 3px;
 `
 
 export const BestContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
+export const ItemSection = styled.section`
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+`
+
+export const ItemContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+`
+
+export const ItemTitle = styled.p`
+  font-size: 22px;
+  font-weight: bolder;
+`
+
+export const ItemRemarks = styled.p`
+  margin-top: 3px;
+`
+
+export const ItemTags = styled.p`
+  color: gray;
+  margin-top: 2px;
+`
+export const ItemPrice = styled.p`
+  font-size: 22px;
+  font-weight: bolder;
 `
 
 export const BestBoardCard = styled(Card)`
@@ -54,45 +113,27 @@ export const TableTop = styled.div`
   margin-top: 20px;
 `;
 
-export const TableBottom = styled.div`
-  border-bottom: 2px solid gray;
-`;
-
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
-  height: 52px;
-  line-height: 52px;
+  height: 150px;
   border-bottom: 1px solid gray;
-
   :hover {
     color: blue;
   }
 `;
 
-export const ColumnHeaderBasic = styled.div`
-  width: 10%;
-  text-align: center;
-`;
-
-export const ColumnHeaderTitle = styled.div`
-  width: 70%;
-  text-align: center;
-`;
+export const ColumnImg = styled.img`
+  padding: 10px;
+  max-width: 140px;
+  min-width: 140px;
+  max-height: 140px;
+  min-height: 140px;
+`
 
 export const ColumnBasic = styled.div`
   width: 10%;
   text-align: center;
-`;
-
-export const ColumnTitle = styled.div`
-  width: 70%;
-  text-align: center;
-  cursor: pointer;
-
-  :hover {
-    color: blue;
-  }
 `;
 
 export const Footer = styled.div`
@@ -121,5 +162,4 @@ export const Button = styled.button`
 `;
 
 export const TextToken = styled.span`
-  color: ${(props: ITextToken) => (props.isMatched ? "red" : "black")};
 `;

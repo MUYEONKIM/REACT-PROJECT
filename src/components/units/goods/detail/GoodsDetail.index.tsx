@@ -1,21 +1,25 @@
 import * as S from "./GoodsDetail.styles";
 import { Tooltip } from "antd";
 import { getDate } from "../../../../commons/libraries/utils";
-import { useQueryFetchBoard } from "../../../commons/hooks/queries/useQueryFetchBoard";
 import { useCheckId } from "../../../commons/hooks/custom/useCheckId";
 import { useLikeBoard } from "../../../commons/hooks/custom/useLikeBoard";
 import { useDislikeBoard } from "../../../commons/hooks/custom/useDislikeBoard";
 import { useMoveToPage } from "../../../commons/hooks/custom/useMovetoPage";
 import { useDeleteBoard } from "../../../commons/hooks/custom/useDeleteBoard";
+import { useQueryFetchUseditem } from "../../../commons/hooks/queries/useQueryFetchUseditem";
+import { getPrice } from "../../../../commons/libraries/price";
+import KakaoMapPage from "../../../commons/kakaomap/kakaomap";
+import { useLikeitem } from "../../../commons/hooks/custom/useLikeitem";
 
 export default function GoodsDetail(): JSX.Element {
   const {id} = useCheckId("boardid");
-  const {data} = useQueryFetchBoard({boardId : id});
-  const onClickLike = useLikeBoard(id);
-  const onClickDislike = useDislikeBoard(id);
+  const {data} = useQueryFetchUseditem({ useditemId : id});
+  const onClickLike = useLikeitem(id);
   const onClickDelete = useDeleteBoard(id);
   const onClickMoveToPage = useMoveToPage();
-  
+  console.log(id)
+  console.log(data?.fetchUseditem)
+
   return (
     <S.Wrapper>
         <S.CardWrapper>
@@ -23,50 +27,42 @@ export default function GoodsDetail(): JSX.Element {
             <S.AvatarWrapper>
               <S.Avatar src="/board/profile.png" />
               <S.Info>
-                <S.Writer>{data?.fetchBoard?.writer}</S.Writer>
+                <S.Writer>{data?.fetchUseditem?.seller?.name}</S.Writer>
                 <S.CreatedAt>
-                  {getDate(data?.fetchBoard?.createdAt)}
+                  {getDate(data?.fetchUseditem?.createdAt)}
                 </S.CreatedAt>
               </S.Info>
             </S.AvatarWrapper>
             <S.IconWrapper>
               <S.LinkIcon src="/board/detail/link.png"/>
               <Tooltip
-                title={`${data?.fetchBoard.boardAddress?.address ?? ""} 
-                        ${data?.fetchBoard.boardAddress?.addressDetail ?? ""}`}
+                title={`${data?.fetchUseditem.useditemAddress?.address ?? ""} 
+                        ${data?.fetchUseditem.useditemAddress?.addressDetail ?? ""}`}
                 >
                 <S.LocationIcon src="/board/detail/address.png"/>
               </Tooltip>
             </S.IconWrapper>
           </S.Header>
           <S.Body>
-            <S.Title>{data?.fetchBoard?.title}</S.Title>
-            <S.ImageWrapper>
-              {data?.fetchBoard.images?.filter(el => el).map(el => 
+            <S.PickCount>
+              <S.HeartIcon onClick={onClickLike}/>
+              {data?.fetchUseditem?.pickedCount}
+            </S.PickCount>
+            <S.Remarks>{data?.fetchUseditem?.remarks}</S.Remarks>
+            <S.Title>{data?.fetchUseditem?.name}</S.Title>
+            <S.Price>{getPrice(data?.fetchUseditem?.price)}</S.Price>
+            <S.ImageCarousel autoplay>
+              {data?.fetchUseditem.images?.filter(el => el).map(el => 
                 <S.Image 
                   key={el}
                   src={`https://storage.googleapis.com/${el}`}
                 />
-              )}
-            </S.ImageWrapper>
-            <S.Contents>{data?.fetchBoard?.contents}</S.Contents>
-            {data?.fetchBoard?.youtubeUrl !== "" && (
-            <S.Youtube
-              url={data?.fetchBoard.youtubeUrl ?? ""}
-              width="600px"
-              height="330px"
-            />
-            )}
-            <S.LikeWrapper>
-              <S.IconWrapper>
-                <S.LikeIcon onClick={onClickLike}/>
-                <S.LikeCount>{data?.fetchBoard.likeCount}</S.LikeCount>
-              </S.IconWrapper>
-              <S.IconWrapper>
-                <S.DislikeIcon onClick={onClickDislike}/>
-                <S.DislikeCount>{data?.fetchBoard.dislikeCount}</S.DislikeCount>
-              </S.IconWrapper>
-            </S.LikeWrapper>
+              )} 
+            </S.ImageCarousel>
+            <S.Contents>{data?.fetchUseditem?.contents}</S.Contents>
+            {data?.fetchUseditem?.useditemAddress?.lat && data?.fetchUseditem?.useditemAddress?.lng? 
+            <KakaoMapPage lat={data?.fetchUseditem?.useditemAddress?.lat} lng={data?.fetchUseditem?.useditemAddress?.lng}/>
+          : <></>}
           </S.Body>
         </S.CardWrapper>
         <S.BottomWrapper>

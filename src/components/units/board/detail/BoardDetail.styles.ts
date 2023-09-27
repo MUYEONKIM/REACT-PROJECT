@@ -123,7 +123,9 @@ export const DislikeCount = styled.div`
   color: #828282;
 `;
 
-export const LinkIcon = styled.img``;
+export const LinkIcon = styled.img`
+  margin-right: 10px;
+`;
 
 export const ImageWrapper = styled.div`
   display: flex;

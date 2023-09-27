@@ -8,8 +8,9 @@ export const FETCH_ITEM_BEST = gql`
       name
       remarks
       price
-      likeCount
+      pickedCount
       images
+      createdAt
     }
   }
 ` 

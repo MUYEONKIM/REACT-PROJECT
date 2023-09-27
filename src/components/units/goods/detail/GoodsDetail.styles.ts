@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { LikeOutlined, DislikeOutlined } from "@ant-design/icons";
+import { LikeOutlined, DislikeOutlined, HeartFilled } from "@ant-design/icons";
 import ReactPlayer from "react-player";
+import { Carousel } from "antd";
 
 export const Wrapper = styled.div`
   width: 1200px;
@@ -54,13 +55,37 @@ export const Body = styled.div`
   min-height: 800px;
 `;
 
-export const Title = styled.h1`
-  padding-top: 80px;
+export const Title = styled.p`
+  font-size: 25px;
+  font-weight: bolder;
+  padding-top: 5px;
+  color : #4e4e4e;
 `;
 
-export const Contents = styled.div`
+export const Remarks = styled.h3`
+  color: gray;
+`;
+
+export const PickCount = styled.section`
+  padding-top: 20px;
+  width: 100%;
+  text-align: end;
+  font-size: 20px;
+`
+
+export const HeartIcon = styled(HeartFilled)`
+  color: #ffd600;
+  margin: 0px 20px;
+  cursor: pointer;
+  font-size: 24px;
+`
+
+export const Price = styled.h1`
+  padding-top: 10px;
+`;
+
+export const Contents = styled.p`
   padding-top: 40px;
-  padding-bottom: 120px;
 `;
 
 export const BottomWrapper = styled.div`
@@ -123,11 +148,12 @@ export const DislikeCount = styled.div`
   color: #828282;
 `;
 
-export const LinkIcon = styled.img``;
+export const LinkIcon = styled.img`
+  margin-right: 10px;
+`;
 
-export const ImageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+export const ImageCarousel = styled(Carousel)`
+  margin-top: 50px;
 `;
 
 export const Image = styled.img`

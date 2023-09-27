@@ -6,7 +6,7 @@ export const FETCH_USED_ITEM = gql`
     fetchUseditem(useditemId: $useditemId) {
       _id
       name
-      reamarks
+      remarks
       contents
       price
       tags
@@ -16,9 +16,14 @@ export const FETCH_USED_ITEM = gql`
         zipcode
         address
         addressDetail
+        lat
+        lng
       }
-      buyer
-      seller
+      seller {
+        _id
+        email
+        name
+      }
       soldAt
       createdAt
     }
