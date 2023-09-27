@@ -2,23 +2,19 @@ import * as S from "./GoodsDetail.styles";
 import { Tooltip } from "antd";
 import { getDate } from "../../../../commons/libraries/utils";
 import { useCheckId } from "../../../commons/hooks/custom/useCheckId";
-import { useLikeBoard } from "../../../commons/hooks/custom/useLikeBoard";
-import { useDislikeBoard } from "../../../commons/hooks/custom/useDislikeBoard";
 import { useMoveToPage } from "../../../commons/hooks/custom/useMovetoPage";
-import { useDeleteBoard } from "../../../commons/hooks/custom/useDeleteBoard";
 import { useQueryFetchUseditem } from "../../../commons/hooks/queries/useQueryFetchUseditem";
 import { getPrice } from "../../../../commons/libraries/price";
 import KakaoMapPage from "../../../commons/kakaomap/kakaomap";
 import { useLikeitem } from "../../../commons/hooks/custom/useLikeitem";
+import { useDeleteItem } from "../../../commons/hooks/custom/useDeleteItem";
 
 export default function GoodsDetail(): JSX.Element {
   const {id} = useCheckId("boardid");
   const {data} = useQueryFetchUseditem({ useditemId : id});
   const onClickLike = useLikeitem(id);
-  const onClickDelete = useDeleteBoard(id);
+  const onClickDelete = useDeleteItem(id);
   const onClickMoveToPage = useMoveToPage();
-  console.log(id)
-  console.log(data?.fetchUseditem)
 
   return (
     <S.Wrapper>
