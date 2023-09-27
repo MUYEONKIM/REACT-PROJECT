@@ -34,7 +34,7 @@ export const WriterWrapper = styled.div`
 `;
 
 export const Writer = styled.input`
-  width: 486px;
+  width: 996px;
   height: 52px;
   padding-left: 16px;
   border: 1px solid #bdbdbd;
@@ -47,10 +47,8 @@ export const Password = styled.input`
   border: 1px solid #bdbdbd;
 `;
 
-export const Label = styled.div`
+export const Label = styled.h3`
   padding-bottom: 16px;
-  font-size: 16px;
-  font-weight: 500;
 `;
 
 export const InputWrapper = styled.div`
@@ -93,12 +91,43 @@ export const SearchButton = styled.button`
   color: white;
 `;
 
+export const GPSWrapper = styled.section`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
+
+export const GPSInput = styled.input`
+  width: 200px;
+  height: 52px;
+  padding-left: 16px;
+  border: 1px solid #bdbdbd;
+`
+
+export const AddressWrapper = styled.section`
+  display: flex;
+  flex-direction: row;
+  padding-top: 40px;
+`
+
+export const AddressSection = styled.section`
+  display: flex;
+  flex-direction: column;
+`
+
+export const MapSection = styled.section`
+  width: 500px;
+  margin-left: 48px;
+`
+
 export const Address = styled.input`
-  width: 996px;
+  width: 448px;
   height: 52px;
   margin-top: 16px;
   padding-left: 16px;
   border: 1px solid #bdbdbd;
+  margin-bottom: 2px;
 `;
 
 export const Youtube = styled.input`
@@ -124,22 +153,6 @@ export const UploadButton = styled.button`
   margin-right: 24px;
   outline: none;
   border: none;
-  cursor: pointer;
-`;
-
-export const OptionWrapper = styled.div`
-  width: 996px;
-  padding-top: 40px;
-`;
-
-export const RadioButton = styled.input`
-  cursor: pointer;
-`;
-
-export const RadioLabel = styled.label`
-  margin-left: 8px;
-  margin-right: 20px;
-  font-weight: 500;
   cursor: pointer;
 `;
 

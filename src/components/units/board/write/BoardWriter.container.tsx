@@ -97,6 +97,7 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
     setAddress(data.address);
     setZipcode(data.zonecode);
     setIsModalOpen((prev) => !prev);
+    console.log(data)
   };
 
   const onChnageFileUrls = (fileUrl : string, index: number): void => {

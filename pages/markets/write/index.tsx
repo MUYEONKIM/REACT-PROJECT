@@ -1,7 +1,7 @@
-import BoardsWriteContainer from "../../../src/components/units/board/write/BoardWriter.container";
+import UsedItemWrite from "../../../src/components/units/goods/write/BoardWriter.presenter";
 
 export default function BoardsWritePage(): JSX.Element {
   return(
-    <BoardsWriteContainer isEdit={false}/>
+    <UsedItemWrite isEdit={false}/>
   )
 }

@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client' 
-import BoardWriteUI from './BoardWriter.presenter';
 import { CREATE_BOARD, UPDATE_BOARD } from './BoardWriter.queries';
 import type { FormValue, BoardData, IBoardWritePropsUI } from './BoardWriter.types';
 import type {ChangeEvent} from "react"
 import type { IMutation, IMutationCreateBoardArgs, IMutationUpdateBoardArgs, IUpdateBoardInput } from '../../../../commons/types/generated/types';
 import type { Address } from 'react-daum-postcode';
 import { message } from 'antd';
+import UsedItemWrite from './BoardWriter.presenter';
 export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Element {
   const router = useRouter();
   const [isActive, setIsActive] = useState(true);
@@ -176,7 +176,7 @@ export default function BoardsWriteContainer(props: IBoardWritePropsUI): JSX.Ele
   }
 
 
-  return <BoardWriteUI 
+  return <UsedItemWrite 
     onValid = {onValid}
     register = {register}
     handleSubmit = {handleSubmit}
