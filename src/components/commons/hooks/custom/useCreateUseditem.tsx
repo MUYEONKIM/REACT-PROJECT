@@ -61,8 +61,6 @@ export const useCreateUseditem = () => {
 
   const onClickRegister = async (data: any): Promise<void> => {
     // console.log(yup.ref('email'))
-    console.log(data)
-    console.log(useditemAddress, fileUrls)
     try {
       const result = await createItem({
         variables: {
@@ -71,19 +69,19 @@ export const useCreateUseditem = () => {
             remarks: data.remarks,
             contents: data.contents,
             price: Number(data.price),
-            tags : ["data.tags"],
+            tags : [data.tag],
             useditemAddress: {
               zipcode: useditemAddress.zipcode,
               address: useditemAddress.address,
               addressDetail: data.addressDetail,
-              lat: data.lat,
-              lng : data.lng
+              lat: Number(data.lat),
+              lng : Number(data.lng)
             },
             images: [...fileUrls],       
           }
         }
       });
-      // Modal.success({content: "회원가입을 축하드립니다"})
+      Modal.success({content: "상품등록이 완료되었습니다"})
       // void router.push("/login")
       console.log(result)
     } catch(error: any){

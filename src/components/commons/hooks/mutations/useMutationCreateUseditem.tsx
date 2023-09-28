@@ -5,9 +5,6 @@ export const CREATE_ITEM = gql`
   mutation createUseditem($createUseditemInput: CreateUseditemInput!) {
     createUseditem(createUseditemInput: $createUseditemInput) {
       _id
-      title
-      contents
-      images
     }
   }
 `
