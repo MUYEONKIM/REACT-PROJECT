@@ -1,35 +1,40 @@
 import { Modal } from "antd";
-import * as yup from "yup"
-import { useRouter } from "next/router";
 import { useMutationCreateUseditem } from "../mutations/useMutationCreateUseditem";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import type { Address } from "react-daum-postcode";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Itemschema } from "../../schema/Item.Schema";
+import { useMutationUpdateUseditem } from "../mutations/useMutationUpdateUseditem";
+import { useCheckId } from "./useCheckId";
+import { useMoveToPage } from "./useMovetoPage";
 
-export interface RegisterData {
-  email: string
-  password: string
+export interface ItemData {
   name: string
-  passwordConfirm?: string | undefined
+  remarks: string
+  contents: string
+  price: string
+  tag: string
+  lat? : number
+  lng? : number
 }
-
-export const schema = yup.object({
-  email: yup.string().typeError("문자를 입력해주세요.").required("이메일을 입력해주세요."),
-  name: yup.string().required("이름을 입력해주세요."),
-  password: yup.string().required("비밀번호를 입력해주세요."),
-  passwordConfirm: yup.string().oneOf([yup.ref('password'), ''], '비밀번호가 일치하지 않습니다.')
-})
 
 export const useCreateUseditem = () => {
   const { 
     register,
     watch,
     handleSubmit,
-    formState: { errors }
-   } = useForm();
+    formState
+   } = useForm<ItemData>({
+    resolver: yupResolver(Itemschema),
+    mode: "onChange"
+  });
 
   const [ createItem ] = useMutationCreateUseditem();
-  const router = useRouter();
+  const [ updateItem ] = useMutationUpdateUseditem();
+
+  const onClickMoveToPage = useMoveToPage();
+  const {id} = useCheckId("boardid");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileUrls, setFileUrls] = useState(["", "", ""]);
@@ -60,7 +65,10 @@ export const useCreateUseditem = () => {
   };
 
   const onClickRegister = async (data: any): Promise<void> => {
-    // console.log(yup.ref('email'))
+    if (!fileUrls) {
+      Modal.error({content: "사진을 등록해주세요"});
+      return;
+    }
     try {
       const result = await createItem({
         variables: {
@@ -82,7 +90,43 @@ export const useCreateUseditem = () => {
         }
       });
       Modal.success({content: "상품등록이 완료되었습니다"})
-      // void router.push("/login")
+      if (result.data?.createUseditem._id === undefined) return;
+      onClickMoveToPage(`/markets/${result.data?.createUseditem._id}`)()
+      console.log(result)
+    } catch(error: any){
+      Modal.error({ content: error.message});
+    }
+  };
+
+  const onClickUpdate = async (data: any): Promise<void> => {
+    if (!fileUrls) {
+      Modal.error({content: "사진을 등록해주세요"});
+      return;
+    }
+    try {
+      const result = await updateItem({
+        variables: {
+          updateUseditemInput: {
+            name: data.name,
+            remarks: data.remarks,
+            contents: data.contents,
+            price: Number(data.price),
+            tags : [data.tag],
+            useditemAddress: {
+              zipcode: useditemAddress.zipcode,
+              address: useditemAddress.address,
+              addressDetail: data.addressDetail,
+              lat: Number(data.lat),
+              lng : Number(data.lng)
+            },
+            images: [...fileUrls],       
+          },
+          useditemId: id
+        }
+      });
+      if (result.data?.updateUseditem._id === undefined) return;
+      Modal.success({content: "상품수정이 완료되었습니다"})
+      onClickMoveToPage(`/markets/${result.data?.updateUseditem._id}`)()
       console.log(result)
     } catch(error: any){
       Modal.error({ content: error.message});
@@ -97,8 +141,10 @@ export const useCreateUseditem = () => {
     onClickAddressSearch,
     onClickAddress,
     onClickRegister,
+    onClickUpdate,
     fileUrls,
     useditemAddress,
-    watch
+    watch,
+    formState,
   };
 }

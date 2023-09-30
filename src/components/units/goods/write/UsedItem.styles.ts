@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import type { ISubmitButtonProps } from "./BoardWriter.types";
 import { Modal } from "antd";
 import DaumPostcode from "react-daum-postcode";
 
@@ -184,7 +183,10 @@ export const SubmitButton = styled.button`
   margin-left: 12px;
   margin-right: 12px;
   cursor: pointer;
-  background-color: ${(props: ISubmitButtonProps) => props.isActive ? "gray" : "yellow"};
+  background-color:  "gray";
+  :hover {
+    background-color: #fa6400;
+  }
 `;
 
 export const Error = styled.div`

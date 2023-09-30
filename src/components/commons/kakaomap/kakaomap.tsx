@@ -5,8 +5,8 @@ declare const window: typeof globalThis & {
 }
 
 interface KakaomapProps {
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
 }
 
 export default function KakaoMapPage(props: KakaomapProps): JSX.Element {
