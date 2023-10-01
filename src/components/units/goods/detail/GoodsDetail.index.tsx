@@ -57,7 +57,10 @@ export default function GoodsDetail(): JSX.Element {
             </S.ImageCarousel>
             <S.Contents>{data?.fetchUseditem?.contents}</S.Contents>
             {data?.fetchUseditem?.useditemAddress?.lat && data?.fetchUseditem?.useditemAddress?.lng? 
-            <KakaoMapPage lat={data?.fetchUseditem?.useditemAddress?.lat} lng={data?.fetchUseditem?.useditemAddress?.lng}/>
+            <S.MapSection>
+              <h2>거래 장소</h2><br/>
+              <KakaoMapPage lat={data?.fetchUseditem?.useditemAddress?.lat} lng={data?.fetchUseditem?.useditemAddress?.lng}/>
+            </S.MapSection>
           : <></>}
           </S.Body>
         </S.CardWrapper>

@@ -88,6 +88,11 @@ export const Contents = styled.p`
   padding-top: 40px;
 `;
 
+export const MapSection = styled.section`
+  height: 640px;
+  padding-top: 40px;
+`
+
 export const BottomWrapper = styled.div`
   display: flex;
   flex-direction: row;
