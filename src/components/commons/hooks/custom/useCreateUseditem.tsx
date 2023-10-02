@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import type { Address } from "react-daum-postcode";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Itemschema } from "../../schema/Item.Schema";
+import { Itemschema } from "../../../../commons/schema/Item.Schema";
 import { useMutationUpdateUseditem } from "../mutations/useMutationUpdateUseditem";
 import { useCheckId } from "./useCheckId";
 import { useMoveToPage } from "./useMovetoPage";
@@ -24,6 +24,8 @@ export const useCreateUseditem = () => {
     register,
     watch,
     handleSubmit,
+    setValue,
+    trigger,
     formState
    } = useForm<ItemData>({
     resolver: yupResolver(Itemschema),
@@ -64,38 +66,44 @@ export const useCreateUseditem = () => {
     setFileUrls(newFileUrls);
   };
 
+  const onChangeContents = (value: string): void => {
+    console.log(value)
+    setValue("contents", value === "<p><br></p>" ? "" : value);
+    void trigger("contents");
+  };
+
   const onClickRegister = async (data: any): Promise<void> => {
     if (!fileUrls) {
       Modal.error({content: "사진을 등록해주세요"});
       return;
     }
-    try {
-      const result = await createItem({
-        variables: {
-          createUseditemInput: {
-            name: data.name,
-            remarks: data.remarks,
-            contents: data.contents,
-            price: Number(data.price),
-            tags : [data.tag],
-            useditemAddress: {
-              zipcode: useditemAddress.zipcode,
-              address: useditemAddress.address,
-              addressDetail: data.addressDetail,
-              lat: Number(data.lat),
-              lng : Number(data.lng)
-            },
-            images: [...fileUrls],       
-          }
-        }
-      });
-      Modal.success({content: "상품등록이 완료되었습니다"})
-      if (result.data?.createUseditem._id === undefined) return;
-      onClickMoveToPage(`/markets/${result.data?.createUseditem._id}`)()
-      console.log(result)
-    } catch(error: any){
-      Modal.error({ content: error.message});
-    }
+    console.log(formState.errors)
+    // try {
+    //   const result = await createItem({
+    //     variables: {
+    //       createUseditemInput: {
+    //         name: data.name,
+    //         remarks: data.remarks,
+    //         contents: data.contents,
+    //         price: Number(data.price),
+    //         tags : [data.tag],
+    //         useditemAddress: {
+    //           zipcode: useditemAddress.zipcode,
+    //           address: useditemAddress.address,
+    //           addressDetail: data.addressDetail,
+    //           lat: Number(data.lat),
+    //           lng : Number(data.lng)
+    //         },
+    //         images: [...fileUrls],       
+    //       }
+    //     }
+    //   });
+    //   Modal.success({content: "상품등록이 완료되었습니다"})
+    //   if (result.data?.createUseditem._id === undefined) return;
+    //   onClickMoveToPage(`/markets/${result.data?.createUseditem._id}`)()
+    // } catch(error: any){
+    //   Modal.error({ content: error.message});
+    // }
   };
 
   const onClickUpdate = async (data: any): Promise<void> => {
@@ -146,5 +154,6 @@ export const useCreateUseditem = () => {
     useditemAddress,
     watch,
     formState,
+    onChangeContents,
   };
 }

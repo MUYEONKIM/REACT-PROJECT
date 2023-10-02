@@ -5,7 +5,7 @@ import { useRegisterSubmit } from "../../commons/hooks/custom/useRegisterSubmit"
 import { yupResolver } from '@hookform/resolvers/yup';
 import type { RegisterData } from "../../commons/hooks/custom/useRegisterSubmit";
 import type { SubmitHandler } from "react-hook-form";
-import { Registerschema } from "../../commons/schema/Register.Schema";
+import { Registerschema } from "../../../commons/schema/Register.Schema";
 
 export default function Register(): JSX.Element {
 

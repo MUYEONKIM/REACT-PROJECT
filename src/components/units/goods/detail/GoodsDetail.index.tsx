@@ -8,6 +8,7 @@ import { getPrice } from "../../../../commons/libraries/price";
 import KakaoMapPage from "../../../commons/kakaomap/kakaomap";
 import { useLikeitem } from "../../../commons/hooks/custom/useLikeitem";
 import { useDeleteItem } from "../../../commons/hooks/custom/useDeleteItem";
+import Dompurify from 'dompurify'
 
 export default function GoodsDetail(): JSX.Element {
   const {id} = useCheckId("boardid");
@@ -55,7 +56,12 @@ export default function GoodsDetail(): JSX.Element {
                 />
               )} 
             </S.ImageCarousel>
-            <S.Contents>{data?.fetchUseditem?.contents}</S.Contents>
+            <S.Contents>
+              {/* {data?.fetchUseditem?.contents} */}
+              {typeof window !== "undefined" && <div dangerouslySetInnerHTML={{
+                __html: Dompurify.sanitize(data?.fetchUseditem?.contents ?? "")
+              }} />}
+            </S.Contents>
             {data?.fetchUseditem?.useditemAddress?.lat && data?.fetchUseditem?.useditemAddress?.lng? 
             <S.MapSection>
               <h2>거래 장소</h2><br/>

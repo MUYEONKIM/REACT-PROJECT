@@ -84,7 +84,7 @@ export const Price = styled.h1`
   padding-top: 10px;
 `;
 
-export const Contents = styled.p`
+export const Contents = styled.section`
   padding-top: 40px;
 `;
 

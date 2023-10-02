@@ -1,16 +1,13 @@
-import dynamic from "next/dynamic";
 import { useCreateUseditem } from "../../../commons/hooks/custom/useCreateUseditem";
 import KakaoMapPage from "../../../commons/kakaomap/kakaomap";
 import UploadContainer from "../../../commons/upload/Upload.container";
+import WebEditor from "../../../commons/webEditor/webEditor";
 import * as S from "./UsedItem.styles";
 import type { IUsedItemWritePropsUI } from "./UsedItem.types";
 import { v4 as uuidv4 } from "uuid"
 import 'react-quill/dist/quill.snow.css';
 
 export default function UsedItemWrite(props: IUsedItemWritePropsUI): JSX.Element {
-  const ReactQuill = dynamic(async () =>await import("react-quill"), {
-    ssr: false 
- });
 
   const {
     register, 
@@ -24,7 +21,8 @@ export default function UsedItemWrite(props: IUsedItemWritePropsUI): JSX.Element
     useditemAddress,
     watch,
     formState,
-    onClickUpdate
+    onClickUpdate,
+    onChangeContents,
   } = useCreateUseditem();
   
   return (
@@ -59,14 +57,13 @@ export default function UsedItemWrite(props: IUsedItemWritePropsUI): JSX.Element
       </S.InputWrapper>
       <S.InputWrapper>
         <S.Label>상품설명</S.Label>
-        <ReactQuill />
-        <S.Contents {...register("contents")} 
+        {/* <S.Contents {...register("contents")} 
           placeholder="내용을 작성해주세요."
           defaultValue={props.data?.fetchUseditem.contents}
           >
-        <ReactQuill />
-        </S.Contents>
-          <S.Error>{formState.errors.contents?.message}</S.Error>
+        </S.Contents> */}
+        <WebEditor onChangeContents={onChangeContents} />
+        <S.Error>{formState.errors.contents?.message}</S.Error>
       </S.InputWrapper>
       <S.InputWrapper>
         <S.Label>판매 가격</S.Label>
@@ -74,7 +71,7 @@ export default function UsedItemWrite(props: IUsedItemWritePropsUI): JSX.Element
           type="text" placeholder="가격을 입력해주세요." 
           defaultValue={props.data?.fetchUseditem.price ?? ""}
           />
-          <S.Error>{formState.errors.contents?.message}</S.Error>
+          <S.Error>{formState.errors.price?.message}</S.Error>
       </S.InputWrapper>
       <S.InputWrapper>
         <S.Label>태그 입력</S.Label>
