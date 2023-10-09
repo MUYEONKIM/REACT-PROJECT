@@ -57,11 +57,6 @@ export default function UsedItemWrite(props: IUsedItemWritePropsUI): JSX.Element
       </S.InputWrapper>
       <S.InputWrapper>
         <S.Label>상품설명</S.Label>
-        {/* <S.Contents {...register("contents")} 
-          placeholder="내용을 작성해주세요."
-          defaultValue={props.data?.fetchUseditem.contents}
-          >
-        </S.Contents> */}
         <WebEditor onChangeContents={onChangeContents} />
         <S.Error>{formState.errors.contents?.message}</S.Error>
       </S.InputWrapper>
