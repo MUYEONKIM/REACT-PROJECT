@@ -78,32 +78,32 @@ export const useCreateUseditem = () => {
       return;
     }
     console.log(formState.errors)
-    // try {
-    //   const result = await createItem({
-    //     variables: {
-    //       createUseditemInput: {
-    //         name: data.name,
-    //         remarks: data.remarks,
-    //         contents: data.contents,
-    //         price: Number(data.price),
-    //         tags : [data.tag],
-    //         useditemAddress: {
-    //           zipcode: useditemAddress.zipcode,
-    //           address: useditemAddress.address,
-    //           addressDetail: data.addressDetail,
-    //           lat: Number(data.lat),
-    //           lng : Number(data.lng)
-    //         },
-    //         images: [...fileUrls],       
-    //       }
-    //     }
-    //   });
-    //   Modal.success({content: "상품등록이 완료되었습니다"})
-    //   if (result.data?.createUseditem._id === undefined) return;
-    //   onClickMoveToPage(`/markets/${result.data?.createUseditem._id}`)()
-    // } catch(error: any){
-    //   Modal.error({ content: error.message});
-    // }
+    try {
+      const result = await createItem({
+        variables: {
+          createUseditemInput: {
+            name: data.name,
+            remarks: data.remarks,
+            contents: data.contents,
+            price: Number(data.price),
+            tags : [data.tag],
+            useditemAddress: {
+              zipcode: useditemAddress.zipcode,
+              address: useditemAddress.address,
+              addressDetail: data.addressDetail,
+              lat: Number(data.lat),
+              lng : Number(data.lng)
+            },
+            images: [...fileUrls],       
+          }
+        }
+      });
+      Modal.success({content: "상품등록이 완료되었습니다"})
+      if (result.data?.createUseditem._id === undefined) return;
+      onClickMoveToPage(`/markets/${result.data?.createUseditem._id}`)()
+    } catch(error: any){
+      Modal.error({ content: error.message});
+    }
   };
 
   const onClickUpdate = async (data: any): Promise<void> => {

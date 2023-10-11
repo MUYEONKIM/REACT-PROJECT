@@ -53,4 +53,9 @@ export const ProfileFunction = styled.section`
 
 export const ProfileSpan = styled.span`
   margin-left: 18px;
+  `
+
+export const Profilecontent = styled.section`
+  display: flex;
+  flex-direction: column;
 `
