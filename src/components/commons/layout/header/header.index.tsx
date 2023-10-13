@@ -5,21 +5,31 @@ import { accessTokenState } from "../../../../commons/stores";
 import { Modal, Popover } from "antd";
 import { useQueryFetchUser } from "../../hooks/queries/useQueryFetchUser";
 import { LogoutOutlined, PlusSquareOutlined, UnorderedListOutlined } from "@ant-design/icons";
-import useQueryFetchPointTransactionsCountOfLoading from "../../hooks/queries/useQueryfetchPointTransactionsCountOfLoading";
 import usePayment from "../../hooks/custom/usePayment";
 import { useState } from "react";
+import type { ChangeEvent } from "react";
 
 export default function LayoutHeader(): JSX.Element {
   const [ accessToken, setAccessToken ] = useRecoilState(accessTokenState);
+  const [ point, setPoint ] = useState(0);
   const [ isOpen, setIsOpen ] = useState(false);
-  const {data: point} = useQueryFetchPointTransactionsCountOfLoading();
-  const onClickPayment = usePayment();
+  const [ isActive, setIsActive ] = useState(false);
+  const { onClickPayment, qqq, pointdata } = usePayment(point);
+  const Payment = () => {
+    onClickPayment();
+    setIsOpen(curr => !curr)
+  }
   const onClickMoveToPage = useMoveToPage();
+  const onChangePoint = (value: ChangeEvent<HTMLInputElement>) => {
+    setPoint(Number(value.target.value));
+    value.target.value ? setIsActive(true): setIsActive(false);
+  };
   const LOGOUT = () => {
     localStorage.removeItem("accessToken")
     setAccessToken("")
   }
-  const Point = point?.fetchPointTransactionsCountOfLoading
+  const Point = pointdata?.fetchPointTransactions[0]?.balance
+  console.log(qqq, Point)
   const { data } = useQueryFetchUser();
   const text = (
       <S.Profile>
@@ -28,7 +38,7 @@ export default function LayoutHeader(): JSX.Element {
           <S.ProfileSpan>{data?.fetchUserLoggedIn.name}
           </S.ProfileSpan>
           <S.ProfileSpan>
-            {Point ?? "0"} : Point
+            {qqq || Point} : Point
           </S.ProfileSpan>
         </S.Profilecontent>
       </S.Profile>
@@ -57,8 +67,13 @@ export default function LayoutHeader(): JSX.Element {
   );
   return (
     <S.Wrapper>
-      <Modal open={isOpen} onCancel={() => setIsOpen(curr => !curr)}>
-
+      <Modal open={isOpen} onCancel={() => setIsOpen(curr => !curr)} footer="">
+        <S.ModalSection>
+          <S.ModalIcon src="/icon/pay.png"/>
+          <S.ModalHeader>충전하실 금액을 입력해주세요!</S.ModalHeader>
+          <S.ModalInput placeholder="포인트 입력" onChange={onChangePoint}/>
+          <S.ModalButton onClick={Payment} isActive={isActive}>충전하기</S.ModalButton>
+        </S.ModalSection>
       </Modal>
       <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
       <S.InnerWrapper>

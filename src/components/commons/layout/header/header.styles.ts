@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
 
+interface Isubmit {
+  isActive: boolean
+}
+
 export const Wrapper = styled.div`
   height: 152px;
   background-color: #f5f2fc;
@@ -59,3 +63,43 @@ export const Profilecontent = styled.section`
   display: flex;
   flex-direction: column;
 `
+
+export const ModalSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const ModalIcon = styled.img`
+  width: 120.07px;
+  margin-top: 50px;
+`
+
+export const ModalHeader = styled.h1`
+  margin-top: 50px;
+`
+
+export const ModalInput = styled.input`
+  border: none;
+  border-bottom: 2px solid;
+  font-size: 16px;
+  font-weight: 500;
+  width : 80%;
+  height: 5vh;
+  margin-top: 50px;
+`
+
+export const ModalButton = styled.button`
+  border: none;
+  font-size: 16px;
+  font-weight: 900;
+  margin-left: 12px;
+  margin-right: 12px;
+  cursor: pointer;
+  color: white;
+  border-radius: 15px;
+  width : 80%;
+  height: 5vh;
+  background-color: ${(props: Isubmit) => props.isActive ? "#FFD600" : "#BDBDBD" };
+  margin-top: 50px;
+`;
