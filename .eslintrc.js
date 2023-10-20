@@ -23,5 +23,6 @@ module.exports = {
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/no-confusing-void-expression": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
+        '@typescript-eslint/naming-convention' : 'off',
     }
 }

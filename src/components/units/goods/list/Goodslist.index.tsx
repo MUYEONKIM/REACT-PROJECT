@@ -17,13 +17,13 @@ export default function GoodsList(): JSX.Element {
     refetch
   });
   const { Meta } = Card;
-  const onClickMoveToPage = useMoveToPage();
+  const {onClickMoveToPage, onClickMarketPage} = useMoveToPage();
   return (
     <S.Wrapper>
       <S.BestWrapper>
          {dataBest?.fetchUseditemsOfTheBest.map((el) => (
            <S.BestBoardCard
-             onClick={onClickMoveToPage(`/markets/${el._id}`)}
+             onClick={onClickMarketPage(el)}
              key={el._id}
              hoverable
              cover = {<S.BestBoardImg src={el.images?.[0] ?`https://storage.googleapis.com/${el.images[0]}` : "/board/profile.png"} />}
@@ -57,7 +57,7 @@ export default function GoodsList(): JSX.Element {
           >
           {data?.fetchUseditems ? (
             data?.fetchUseditems.map((el) => (
-              <S.Row key={el._id} onClick={onClickMoveToPage(`/markets/${el._id}`)}>
+              <S.Row key={el._id} onClick={onClickMarketPage(el)}>
                 <S.ColumnImg src={el.images?.[0] ?`https://storage.googleapis.com/${el.images[0]}` : "/board/profile.png"} />
                 <S.ItemContent>
                   <S.ItemSection>

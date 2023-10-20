@@ -20,7 +20,7 @@ export default function BoardList(): JSX.Element {
   });
   const { Meta } = Card;
   console.log(dataBest)
-  const onClickMoveToPage = useMoveToPage();
+  const {onClickMoveToPage} = useMoveToPage();
   console.log(dataBest?.fetchBoardsOfTheBest)
   return (
     <S.Wrapper>

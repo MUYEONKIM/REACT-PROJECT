@@ -19,7 +19,7 @@ export default function LayoutHeader(): JSX.Element {
     onClickPayment();
     setIsOpen(curr => !curr)
   }
-  const onClickMoveToPage = useMoveToPage();
+  const {onClickMoveToPage} = useMoveToPage();
   const onChangePoint = (value: ChangeEvent<HTMLInputElement>) => {
     setPoint(Number(value.target.value));
     value.target.value ? setIsActive(true): setIsActive(false);

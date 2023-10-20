@@ -18,7 +18,7 @@ export const schema = yup.object({
 export const useLoginSubmit = () => {
   const [ , setAccessToken] = useRecoilState(accessTokenState)
   const [loginUser] = useMutationLoginUser();
-  const onClickMoveToPage = useMoveToPage();
+  const {onClickMoveToPage} = useMoveToPage();
 
   const Login = async (data: LoginData): Promise<void> => {
     try {

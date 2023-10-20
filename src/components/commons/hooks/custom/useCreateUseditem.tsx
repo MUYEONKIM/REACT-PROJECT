@@ -35,7 +35,7 @@ export const useCreateUseditem = () => {
   const [ createItem ] = useMutationCreateUseditem();
   const [ updateItem ] = useMutationUpdateUseditem();
 
-  const onClickMoveToPage = useMoveToPage();
+  const {onClickMoveToPage} = useMoveToPage();
   const {id} = useCheckId("boardid");
 
   const [isModalOpen, setIsModalOpen] = useState(false);

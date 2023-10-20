@@ -14,7 +14,7 @@ export default function BoardDetail(): JSX.Element {
   const onClickLike = useLikeBoard(id);
   const onClickDislike = useDislikeBoard(id);
   const onClickDelete = useDeleteBoard(id);
-  const onClickMoveToPage = useMoveToPage();
+  const {onClickMoveToPage} = useMoveToPage();
   
   return (
     <S.Wrapper>

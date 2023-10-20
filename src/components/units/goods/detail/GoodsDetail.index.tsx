@@ -15,8 +15,7 @@ export default function GoodsDetail(): JSX.Element {
   const {data} = useQueryFetchUseditem({ useditemId : id});
   const onClickLike = useLikeitem(id);
   const onClickDelete = useDeleteItem(id);
-  const onClickMoveToPage = useMoveToPage();
-
+  const {onClickMoveToPage} = useMoveToPage();
   return (
     <S.Wrapper>
         <S.CardWrapper>
