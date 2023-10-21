@@ -16,7 +16,7 @@ export default function SideBar() {
   return (
       <S.SideBarWrapper>
         <S.SideBarTitle>오늘 본 상품</S.SideBarTitle>
-          {items.map((el) => (
+          {items.filter(el => el).map((el) => (
           <S.SideBarContents key={el._id}>
             <S.SideBarP>
               <LikeFilled style={{color: "#ffd903"}}/>&nbsp;&nbsp;
