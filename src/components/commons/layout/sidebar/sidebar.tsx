@@ -4,41 +4,38 @@ import type { IUseditem } from "../../../../commons/types/generated/types";
 import { LikeFilled } from "@ant-design/icons";
 import { getPrice } from "../../../../commons/libraries/price";
 
-
-
 export default function SideBar() {
-  const [ items, setItems] = useState<IUseditem[]>([]);
+  const [items, setItems] = useState<IUseditem[]>([]);
   useEffect(() => {
     const storedItems = localStorage.getItem("todaylist");
+    console.log(storedItems);
     if (!storedItems) return;
-    setItems(JSON.parse(storedItems))
-  }, [items])
+    setItems(JSON.parse(storedItems));
+  }, []);
   return (
-      <S.SideBarWrapper>
-        <S.SideBarTitle>오늘 본 상품</S.SideBarTitle>
-          {items.filter(el => el).map((el) => (
+    <S.SideBarWrapper>
+      <S.SideBarTitle>오늘 본 상품</S.SideBarTitle>
+      {items
+        .filter((el) => el)
+        .map((el) => (
           <S.SideBarContents key={el._id}>
             <S.SideBarP>
-              <LikeFilled style={{color: "#ffd903"}}/>&nbsp;&nbsp;
+              <LikeFilled style={{ color: "#ffd903" }} />
+              &nbsp;&nbsp;
               {el.pickedCount}
             </S.SideBarP>
-            {el.images &&
-            <S.SidaBarImg 
-            src={`https://storage.googleapis.com/${el.images[0]}`} 
-            />}
+            {el.images && (
+              <S.SidaBarImg
+                src={`https://storage.googleapis.com/${el.images[0]}`}
+              />
+            )}
             <S.SidebarDetail>
-              <S.SideBarName>
-                {el.name}
-              </S.SideBarName>
-              <S.SideBarRemarks>
-                {el.remarks}
-              </S.SideBarRemarks>
-              <S.SideBarPrice>
-                {getPrice(el.price)}
-              </S.SideBarPrice>
+              <S.SideBarName>{el.name}</S.SideBarName>
+              <S.SideBarRemarks>{el.remarks}</S.SideBarRemarks>
+              <S.SideBarPrice>{getPrice(el.price)}</S.SideBarPrice>
             </S.SidebarDetail>
           </S.SideBarContents>
-          ))}
-      </S.SideBarWrapper>
-  )
+        ))}
+    </S.SideBarWrapper>
+  );
 }
