@@ -9,8 +9,8 @@ const NAVIGATION_MENUS = [
 ];
 
 export default function LayoutNavigationUI(): JSX.Element {
-  const {onClickMoveToPage} = useMoveToPage();
-  
+  const { onClickMoveToPage } = useMoveToPage();
+
   return (
     <Wrapper>
       {NAVIGATION_MENUS.map((el) => (

@@ -15,7 +15,7 @@ export const SideBarWrapper = styled.div`
 
 export const SideBarContents = styled.section`
   width: 156px;
-  height: 199px;
+  height: 209px;
   border: 1px solid #bdbdbd;
   display: flex;
   flex-direction: column;
@@ -51,7 +51,7 @@ export const SideBarPrice = styled.h3`
 
 export const SideBarP = styled.p`
   text-align: end;
-  margin-right: 5px;
+  margin: 5px 15px 0 15px;
   font-weight: bold;
 `;
 

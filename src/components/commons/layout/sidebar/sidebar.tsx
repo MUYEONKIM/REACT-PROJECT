@@ -4,11 +4,12 @@ import { LikeFilled } from "@ant-design/icons";
 import { getPrice } from "../../../../commons/libraries/price";
 import { useRecoilState } from "recoil";
 import { todaylistState } from "../../../../commons/stores";
+import { useMoveToPage } from "../../hooks/custom/useMovetoPage";
 
 export default function SideBar(): JSX.Element {
   // const [items, setItems] = useState<IUseditem[]>([]);
   const [todaylist, setTodaylist] = useRecoilState(todaylistState);
-
+  const { onClickMoveToPage } = useMoveToPage();
   useEffect(() => {
     if (todaylist.length === 0) {
       const data = localStorage.getItem("todaylist");
@@ -25,7 +26,10 @@ export default function SideBar(): JSX.Element {
       {todaylist
         .filter((el) => el)
         .map((el) => (
-          <S.SideBarContents key={el._id}>
+          <S.SideBarContents
+            key={el._id}
+            onClick={onClickMoveToPage(`/markets/${el._id}`)}
+          >
             <S.SideBarP>
               <LikeFilled style={{ color: "#ffd903" }} />
               &nbsp;&nbsp;
