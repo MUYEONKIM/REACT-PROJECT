@@ -7,27 +7,28 @@ export interface ISubmitButtonProps {
 }
 
 export interface IBoardWritePropsUI {
-  onValid : (data: BoardData) => void;
-  register : UseFormRegister<FormValue>;
-  handleSubmit : UseFormHandleSubmit<FormValue>;
+  onValid: (data: BoardData) => void;
+  register: UseFormRegister<FormValue>;
+  handleSubmit: UseFormHandleSubmit<FormValue>;
   data?: Pick<IQuery, "fetchBoard">;
   onChangeContents: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   onChangeTitle: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeWriter: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeAddressDetail: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChnageFileUrls: (fileUrl : string, index: number) => void;
+  onChnageFileUrls: (fileUrl: string, index: number) => void;
   onClickUpdate: (data: BoardData) => Promise<void>;
   onClickAddressSearch: (e: any) => void;
   isModalOpen: boolean;
   isActive: boolean;
   isEdit: boolean;
   errors: any;
-  onClickAddress: (data: any) => void
+  onClickAddress: (data: any) => void;
   zipcode: string;
   address: string;
   contextHolder: any;
   fileUrls: string[];
+  isDoubleClick: boolean;
 }
 
 export interface BoardData {

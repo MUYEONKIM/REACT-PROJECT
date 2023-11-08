@@ -8,20 +8,20 @@ import { useQueryFetchBoardsOfTheBest } from "../../../commons/hooks/queries/use
 import Paginations01 from "../../../commons/pagnation/pagnation.contatiner";
 import SearchBar from "../../../commons/search/search.index";
 import * as S from "./Boardlist.style";
-import {v4 as uuidv4} from "uuid"
-const SECRET = "!@#"
+import { v4 as uuidv4 } from "uuid";
+const SECRET = "!@#";
 
 export default function BoardList(): JSX.Element {
   const { data, refetch } = useQueryFetchBoards();
   const { data: dataBest } = useQueryFetchBoardsOfTheBest();
-  const { data: dataBoardsCount, refetch: refetchBoardsCount } = useQueryBoardCount();
-  const { keyword, onChangeSearch } =  useSearchBar({
-    refetch, refetchBoardsCount
+  const { data: dataBoardsCount, refetch: refetchBoardsCount } =
+    useQueryBoardCount();
+  const { keyword, onChangeSearch } = useSearchBar({
+    refetch,
+    refetchBoardsCount,
   });
   const { Meta } = Card;
-  console.log(dataBest)
-  const {onClickMoveToPage} = useMoveToPage();
-  console.log(dataBest?.fetchBoardsOfTheBest)
+  const { onClickMoveToPage } = useMoveToPage();
   return (
     <S.Wrapper>
       <S.BestWrapper>
@@ -30,27 +30,31 @@ export default function BoardList(): JSX.Element {
             onClick={onClickMoveToPage(`/boards/${el._id}`)}
             key={el._id}
             hoverable
-            cover = {<S.BestBoardImg src={el.images?.[0] ?`https://storage.googleapis.com/${el.images[0]}` : "/board/profile.png"} />}
-            >
-              <Meta 
-                title={el.title}
+            cover={
+              <S.BestBoardImg
+                src={
+                  el.images?.[0]
+                    ? `https://storage.googleapis.com/${el.images[0]}`
+                    : "/board/profile.png"
+                }
               />
-              <S.BestSection>
-                <S.BestContent>
-                  <S.BoardP>{el.writer}</S.BoardP>
-                  <S.BoardP>{getDate(el.createdAt)}</S.BoardP>
-                </S.BestContent>
-                <S.BestContent>
-                  <S.LikeIcon />
-                  <S.BoardP>{el.likeCount}</S.BoardP>
-                </S.BestContent>
-              </S.BestSection>
+            }
+          >
+            <Meta title={el.title} />
+            <S.BestSection>
+              <S.BestContent>
+                <S.BoardP>{el.writer}</S.BoardP>
+                <S.BoardP>{getDate(el.createdAt)}</S.BoardP>
+              </S.BestContent>
+              <S.BestContent>
+                <S.LikeIcon />
+                <S.BoardP>{el.likeCount}</S.BoardP>
+              </S.BestContent>
+            </S.BestSection>
           </S.BestBoardCard>
         ))}
       </S.BestWrapper>
-      <SearchBar 
-        onChangeKeyword = {onChangeSearch}
-      />
+      <SearchBar onChangeKeyword={onChangeSearch} />
       <S.TableTop />
       <S.Row>
         <S.ColumnHeaderBasic>ID</S.ColumnHeaderBasic>
@@ -63,16 +67,18 @@ export default function BoardList(): JSX.Element {
           <S.ColumnBasic>
             {String(el._id).slice(-4).toUpperCase()}
           </S.ColumnBasic>
-          <S.ColumnTitle id={el._id} onClick={onClickMoveToPage(`/boards/${el._id}`)}>
-            {el.title.replaceAll( keyword, `${SECRET}${keyword}${SECRET}`)
-            .split(SECRET).map(el => (
-              <S.TextToken
-                key={uuidv4()}
-                isMatched={keyword === el}
-              >
-                {el}
-              </S.TextToken>
-            ))}
+          <S.ColumnTitle
+            id={el._id}
+            onClick={onClickMoveToPage(`/boards/${el._id}`)}
+          >
+            {el.title
+              .replaceAll(keyword, `${SECRET}${keyword}${SECRET}`)
+              .split(SECRET)
+              .map((el) => (
+                <S.TextToken key={uuidv4()} isMatched={keyword === el}>
+                  {el}
+                </S.TextToken>
+              ))}
           </S.ColumnTitle>
           <S.ColumnBasic>{el.writer}</S.ColumnBasic>
           <S.ColumnBasic>{getDate(el.createdAt)}</S.ColumnBasic>
@@ -80,7 +86,10 @@ export default function BoardList(): JSX.Element {
       ))}
       <S.TableBottom />
       <S.Footer>
-        <Paginations01 refetch={refetch} count={dataBoardsCount?.fetchBoardsCount}/>
+        <Paginations01
+          refetch={refetch}
+          count={dataBoardsCount?.fetchBoardsCount}
+        />
         <S.Button onClick={onClickMoveToPage("/boards/write")}>
           <S.PencilIcon src="/board/list/write.png" />
           게시물 등록하기

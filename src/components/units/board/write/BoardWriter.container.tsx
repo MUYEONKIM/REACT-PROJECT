@@ -50,6 +50,7 @@ const BoardsWriteContainer = (props: IBoardWritePropsUI): JSX.Element => {
     } catch (error) {
       console.log(error);
     }
+    setIsDoubleClick(false);
   };
   const errorinfo = async (): Promise<void> => {
     setIsDoubleClick(true);
@@ -58,6 +59,7 @@ const BoardsWriteContainer = (props: IBoardWritePropsUI): JSX.Element => {
         type: "error",
         content: "게시물 등록이 실패하였습니다.",
       });
+      setIsDoubleClick(false);
     } catch (error) {
       console.log(error);
     }
@@ -69,6 +71,7 @@ const BoardsWriteContainer = (props: IBoardWritePropsUI): JSX.Element => {
         type: "error",
         content: "수정한 내용이 없습니다.",
       });
+      setIsDoubleClick(false);
     } catch (error) {
       console.log(error);
     }
@@ -80,6 +83,7 @@ const BoardsWriteContainer = (props: IBoardWritePropsUI): JSX.Element => {
         type: "error",
         content: "비밀번호를 입력해주세요.",
       });
+      setIsDoubleClick(false);
     } catch (error) {
       console.log(error);
     }
@@ -228,6 +232,7 @@ const BoardsWriteContainer = (props: IBoardWritePropsUI): JSX.Element => {
       zipcode={zipcode}
       address={address}
       contextHolder={contextHolder}
+      isDoubleClick={isDoubleClick}
     />
   );
 };

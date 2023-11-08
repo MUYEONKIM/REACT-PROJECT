@@ -10,45 +10,40 @@ import { useCheckId } from "./useCheckId";
 import { useMoveToPage } from "./useMovetoPage";
 
 export interface ItemData {
-  name: string
-  remarks: string
-  contents: string
-  price: string
-  tag: string
-  lat? : number
-  lng? : number
+  name: string;
+  remarks: string;
+  contents: string;
+  price: string;
+  tag: string;
+  lat?: number;
+  lng?: number;
 }
 
 export const useCreateUseditem = () => {
-  const { 
-    register,
-    watch,
-    handleSubmit,
-    setValue,
-    trigger,
-    formState
-   } = useForm<ItemData>({
-    resolver: yupResolver(Itemschema),
-    mode: "onChange"
-  });
+  const { register, watch, handleSubmit, setValue, trigger, formState } =
+    useForm<ItemData>({
+      resolver: yupResolver(Itemschema),
+      mode: "onChange",
+    });
 
-  const [ createItem ] = useMutationCreateUseditem();
-  const [ updateItem ] = useMutationUpdateUseditem();
+  const [createItem] = useMutationCreateUseditem();
+  const [updateItem] = useMutationUpdateUseditem();
 
-  const {onClickMoveToPage} = useMoveToPage();
-  const {id} = useCheckId("boardid");
+  const { onClickMoveToPage } = useMoveToPage();
+  const { id } = useCheckId("boardid");
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileUrls, setFileUrls] = useState(["", "", ""]);
   const [useditemAddress, setUseditemAddress] = useState({
-   zipcode: "",
-   address: "",
+    zipcode: "",
+    address: "",
   });
 
   const onClickAddressSearch = (e: any): void => {
     e.preventDefault();
     e.stopPropagation();
-    setIsModalOpen((prev) => !prev)
+    setIsModalOpen((prev) => !prev);
   };
 
   const onClickAddress = (data: Address): void => {
@@ -60,24 +55,25 @@ export const useCreateUseditem = () => {
     setIsModalOpen((prev) => !prev);
   };
 
-  const onChnageFileUrls = (fileUrl : string, index: number): void => {
+  const onChnageFileUrls = (fileUrl: string, index: number): void => {
     const newFileUrls = [...fileUrls];
     newFileUrls[index] = fileUrl;
     setFileUrls(newFileUrls);
   };
 
   const onChangeContents = (value: string): void => {
-    console.log(value)
+    console.log(value);
     setValue("contents", value === "<p><br></p>" ? "" : value);
     void trigger("contents");
   };
 
   const onClickRegister = async (data: any): Promise<void> => {
+    setIsSubmitting(true);
     if (!fileUrls) {
-      Modal.error({content: "사진을 등록해주세요"});
+      Modal.error({ content: "사진을 등록해주세요" });
       return;
     }
-    console.log(formState.errors)
+    console.log(formState.errors);
     try {
       const result = await createItem({
         variables: {
@@ -86,29 +82,30 @@ export const useCreateUseditem = () => {
             remarks: data.remarks,
             contents: data.contents,
             price: Number(data.price),
-            tags : [data.tag],
+            tags: [data.tag],
             useditemAddress: {
               zipcode: useditemAddress.zipcode,
               address: useditemAddress.address,
               addressDetail: data.addressDetail,
               lat: Number(data.lat),
-              lng : Number(data.lng)
+              lng: Number(data.lng),
             },
-            images: [...fileUrls],       
-          }
-        }
+            images: [...fileUrls],
+          },
+        },
       });
-      Modal.success({content: "상품등록이 완료되었습니다"})
+      Modal.success({ content: "상품등록이 완료되었습니다" });
       if (result.data?.createUseditem._id === undefined) return;
-      onClickMoveToPage(`/markets/${result.data?.createUseditem._id}`)()
-    } catch(error: any){
-      Modal.error({ content: error.message});
+      setIsSubmitting(false);
+      onClickMoveToPage(`/markets/${result.data?.createUseditem._id}`)();
+    } catch (error: any) {
+      Modal.error({ content: error.message });
     }
   };
 
   const onClickUpdate = async (data: any): Promise<void> => {
     if (!fileUrls) {
-      Modal.error({content: "사진을 등록해주세요"});
+      Modal.error({ content: "사진을 등록해주세요" });
       return;
     }
     try {
@@ -119,33 +116,33 @@ export const useCreateUseditem = () => {
             remarks: data.remarks,
             contents: data.contents,
             price: Number(data.price),
-            tags : [data.tag],
+            tags: [data.tag],
             useditemAddress: {
               zipcode: useditemAddress.zipcode,
               address: useditemAddress.address,
               addressDetail: data.addressDetail,
               lat: Number(data.lat),
-              lng : Number(data.lng)
+              lng: Number(data.lng),
             },
-            images: [...fileUrls],       
+            images: [...fileUrls],
           },
-          useditemId: id
-        }
+          useditemId: id,
+        },
       });
       if (result.data?.updateUseditem._id === undefined) return;
-      Modal.success({content: "상품수정이 완료되었습니다"})
-      onClickMoveToPage(`/markets/${result.data?.updateUseditem._id}`)()
-      console.log(result)
-    } catch(error: any){
-      Modal.error({ content: error.message});
+      Modal.success({ content: "상품수정이 완료되었습니다" });
+      onClickMoveToPage(`/markets/${result.data?.updateUseditem._id}`)();
+      console.log(result);
+    } catch (error: any) {
+      Modal.error({ content: error.message });
     }
   };
 
   return {
-    register, 
-    handleSubmit, 
-    isModalOpen, 
-    onChnageFileUrls, 
+    register,
+    handleSubmit,
+    isModalOpen,
+    onChnageFileUrls,
     onClickAddressSearch,
     onClickAddress,
     onClickRegister,
@@ -156,4 +153,4 @@ export const useCreateUseditem = () => {
     formState,
     onChangeContents,
   };
-}
+};

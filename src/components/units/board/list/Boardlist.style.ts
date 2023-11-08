@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Card } from "antd";
 
 interface ITextToken {
-  isMatched : boolean
+  isMatched: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -16,14 +16,13 @@ export const BestWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 50px;
-`
+`;
 
 export const BestBoardImg = styled.img`
   max-width: 240px;
   max-height: 140px;
   min-height: 140px;
-
-`
+`;
 export const LikeIcon = styled(LikeOutlined)`
   font-size: 20px;
   color: #ffd600;
@@ -35,19 +34,17 @@ export const BestSection = styled.section`
   flex-direction: row;
   justify-content: space-between;
   margin-top: 20px;
-`
+`;
 
 export const BoardP = styled.p`
   margin-top: 3px;
-`
+`;
 
-export const BestContent = styled.div`
-
-`
+export const BestContent = styled.div``;
 
 export const BestBoardCard = styled(Card)`
-  width: 240PX;
-`
+  width: 240px;
+`;
 
 export const TableTop = styled.div`
   border-top: 2px solid gray;
@@ -83,6 +80,9 @@ export const ColumnHeaderTitle = styled.div`
 export const ColumnBasic = styled.div`
   width: 10%;
   text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 export const ColumnTitle = styled.div`

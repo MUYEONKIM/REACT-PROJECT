@@ -23,6 +23,7 @@ const UsedItemWrite = (props: IUsedItemWritePropsUI): JSX.Element => {
     formState,
     onClickUpdate,
     onChangeContents,
+    isSubmitting,
   } = useCreateUseditem();
 
   return (
@@ -153,7 +154,7 @@ const UsedItemWrite = (props: IUsedItemWritePropsUI): JSX.Element => {
           </S.ImageBox>
         </S.ImageWrapper>
         <S.ButtonWrapper>
-          <S.SubmitButton type="submit">
+          <S.SubmitButton type="submit" disabled={isSubmitting}>
             {props.isEdit ? "수정하기" : "등록하기"}
           </S.SubmitButton>
         </S.ButtonWrapper>
