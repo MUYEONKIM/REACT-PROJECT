@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
 import { useMoveToPage } from "../../hooks/custom/useMovetoPage";
 import * as S from "./header.styles";
-import { accessTokenState } from "../../../../commons/stores";
+import { accessTokenState, todaylistState } from "../../../../commons/stores";
 import { Modal, Popover } from "antd";
 import { useQueryFetchUser } from "../../hooks/queries/useQueryFetchUser";
 import {
@@ -15,6 +15,7 @@ import type { ChangeEvent } from "react";
 
 export default function LayoutHeader(): JSX.Element {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const [, setTodaylist] = useRecoilState(todaylistState);
   const [point, setPoint] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -32,6 +33,7 @@ export default function LayoutHeader(): JSX.Element {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("todaylist");
     setAccessToken("");
+    setTodaylist([]);
   };
   const Point = pointdata?.fetchPointTransactions[0]?.balance;
   const { data } = useQueryFetchUser();

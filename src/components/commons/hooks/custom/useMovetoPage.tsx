@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
 import type { IUseditem } from "../../../../commons/types/generated/types";
+import { useRecoilState } from "recoil";
+import { todaylistState } from "../../../../commons/stores";
 
 export const useMoveToPage = () => {
+  const [, setTodaylist] = useRecoilState(todaylistState);
   const router = useRouter();
 
   const onClickMoveToPage = (path: string) => () => {
@@ -9,18 +12,21 @@ export const useMoveToPage = () => {
   };
 
   const onClickMarketPage = (basket: IUseditem) => () => {
-    const baskets: IUseditem[] = JSON.parse(
+    const previousBaskets: IUseditem[] = JSON.parse(
       localStorage.getItem("todaylist") ?? "[]",
     );
-    const temp = baskets.filter((el) => el._id === basket._id);
+    const temp = previousBaskets.filter((el) => el._id === basket._id);
     if (temp.length >= 1) {
       void router.push(`/markets/${basket._id}`);
       return;
     }
     const { __typename, ...newbasket } = basket;
-    baskets.push(newbasket);
-
-    localStorage.setItem("todaylist", JSON.stringify(baskets));
+    const currentBaskets = [newbasket, ...previousBaskets];
+    if (currentBaskets.length >= 6) {
+      currentBaskets.pop();
+    }
+    setTodaylist(currentBaskets);
+    localStorage.setItem("todaylist", JSON.stringify(currentBaskets));
     void router.push(`/markets/${basket._id}`);
   };
   return {

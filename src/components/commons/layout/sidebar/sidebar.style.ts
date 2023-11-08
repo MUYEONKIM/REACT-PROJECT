@@ -5,7 +5,7 @@ export const SideBarWrapper = styled.div`
   border: 1px solid #bdbdbd;
   width: 196;
   height: 505px;
-  top: 500px;
+  top: 300px;
   overflow: auto;
 
   &::-webkit-scrollbar {

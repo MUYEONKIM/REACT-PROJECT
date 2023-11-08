@@ -1,14 +1,19 @@
 import { atom } from "recoil";
 
 export const accessTokenState = atom({
-  key : "accessTokenState",
-  default : ""
-})
+  key: "accessTokenState",
+  default: "",
+});
+
+export const todaylistState = atom({
+  key: "todaylistState",
+  default: [],
+});
 
 export const userInfo = atom({
-  key : "userInfo",
-  default : {
+  key: "userInfo",
+  default: {
     email: "",
-    name: ""
-  }
-})
+    name: "",
+  },
+});

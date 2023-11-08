@@ -1,21 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import * as S from "./sidebar.style";
-import type { IUseditem } from "../../../../commons/types/generated/types";
 import { LikeFilled } from "@ant-design/icons";
 import { getPrice } from "../../../../commons/libraries/price";
+import { useRecoilState } from "recoil";
+import { todaylistState } from "../../../../commons/stores";
 
-export default function SideBar() {
-  const [items, setItems] = useState<IUseditem[]>([]);
+export default function SideBar(): JSX.Element {
+  // const [items, setItems] = useState<IUseditem[]>([]);
+  const [todaylist, setTodaylist] = useRecoilState(todaylistState);
+
   useEffect(() => {
-    const storedItems = localStorage.getItem("todaylist");
-    console.log(storedItems);
-    if (!storedItems) return;
-    setItems(JSON.parse(storedItems));
-  }, []);
+    if (todaylist.length === 0) {
+      const data = localStorage.getItem("todaylist");
+      if (!data) return;
+      const list = JSON.parse(data);
+      setTodaylist(list);
+    }
+  }, [todaylist]);
+
+  console.log(todaylist);
   return (
     <S.SideBarWrapper>
       <S.SideBarTitle>오늘 본 상품</S.SideBarTitle>
-      {items
+      {todaylist
         .filter((el) => el)
         .map((el) => (
           <S.SideBarContents key={el._id}>
