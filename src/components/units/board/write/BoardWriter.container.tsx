@@ -19,6 +19,8 @@ import type {
 import type { Address } from "react-daum-postcode";
 import { message } from "antd";
 import { withAuth } from "../../../commons/hocs/withAuth";
+import { FETCH_BOARD } from "../../../commons/hooks/queries/useQueryFetchBoard";
+import { FetchBoards } from "../../../commons/hooks/queries/useQueryFetchBoards";
 const BoardsWriteContainer = (props: IBoardWritePropsUI): JSX.Element => {
   const router = useRouter();
   const [isActive, setIsActive] = useState(true);
@@ -159,6 +161,11 @@ const BoardsWriteContainer = (props: IBoardWritePropsUI): JSX.Element => {
             images: [...fileUrls],
           },
         },
+        refetchQueries: [
+          {
+            query: FetchBoards,
+          },
+        ],
       });
       if (result.data?.createBoard._id === undefined) {
         await errorinfo();
@@ -197,6 +204,16 @@ const BoardsWriteContainer = (props: IBoardWritePropsUI): JSX.Element => {
           updateBoardInput: updataBoardInput,
           password: data.password,
         },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD,
+            variables: {
+              boardId: router.query.boardid,
+              updateBoardInput: updataBoardInput,
+              password: data.password,
+            },
+          },
+        ],
       });
       if (result.data?.updateBoard._id === undefined) {
         await errorinfo();
