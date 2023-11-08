@@ -20,11 +20,23 @@ export const LOGIN_USER_EXAMPLE = gql`
   }
 `;
 
+export const LOGOUT_USER = gql`
+  mutation logoutUser {
+    logoutUser
+  }
+`;
+
 export const useMutationLoginUser = () => {
   const mutation = useMutation<
     Pick<IMutation, "loginUser">,
     IMutationLoginUserArgs
   >(LOGIN_USER_EXAMPLE);
+
+  return mutation;
+};
+
+export const useLogout = () => {
+  const mutation = useMutation(LOGOUT_USER);
 
   return mutation;
 };

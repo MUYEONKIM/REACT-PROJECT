@@ -1,5 +1,5 @@
 import { SliderItem, Wrapper } from "./banner.styles";
-import Slider from 'react-slick'
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -16,16 +16,16 @@ export default function LayoutBannerUI(): JSX.Element {
     <Wrapper>
       <Slider {...settings}>
         <div>
-          <SliderItem src="/banner/banner1.png" />
+          <SliderItem src="/banner/banner1.png" width={"100%"} />
         </div>
         <div>
-          <SliderItem src="/banner/banner2.png" />
+          <SliderItem src="/banner/banner2.png" width={"100%"} />
         </div>
         <div>
-          <SliderItem src="/banner/banner3.png" />
+          <SliderItem src="/banner/banner3.png" width={"100%"} />
         </div>
         <div>
-          <SliderItem src="/banner/banner4.png" />
+          <SliderItem src="/banner/banner4.png" width={"100%"} />
         </div>
       </Slider>
     </Wrapper>

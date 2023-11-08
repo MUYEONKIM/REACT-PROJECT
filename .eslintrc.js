@@ -17,12 +17,13 @@ module.exports = {
         "react"
     ],
     "rules": {
-        "react/react-in-jsx-scope" : "off",
+        "react/react-in-jsx-scope": "off",
         "@typescript-eslint/no-misused-promises": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/no-confusing-void-expression": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
-        '@typescript-eslint/naming-convention' : 'off',
+        '@typescript-eslint/naming-convention': 'off',
+        "react/display-name": "off",
     }
 }

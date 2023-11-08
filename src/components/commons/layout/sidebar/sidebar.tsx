@@ -21,32 +21,38 @@ export default function SideBar(): JSX.Element {
 
   console.log(todaylist);
   return (
-    <S.SideBarWrapper>
-      <S.SideBarTitle>오늘 본 상품</S.SideBarTitle>
-      {todaylist
-        .filter((el) => el)
-        .map((el) => (
-          <S.SideBarContents
-            key={el._id}
-            onClick={onClickMoveToPage(`/markets/${el._id}`)}
-          >
-            <S.SideBarP>
-              <LikeFilled style={{ color: "#ffd903" }} />
-              &nbsp;&nbsp;
-              {el.pickedCount}
-            </S.SideBarP>
-            {el.images && (
-              <S.SidaBarImg
-                src={`https://storage.googleapis.com/${el.images[0]}`}
-              />
-            )}
-            <S.SidebarDetail>
-              <S.SideBarName>{el.name}</S.SideBarName>
-              <S.SideBarRemarks>{el.remarks}</S.SideBarRemarks>
-              <S.SideBarPrice>{getPrice(el.price)}</S.SideBarPrice>
-            </S.SidebarDetail>
-          </S.SideBarContents>
-        ))}
-    </S.SideBarWrapper>
+    <>
+      {todaylist.length >= 1 ? (
+        <S.SideBarWrapper>
+          <S.SideBarTitle>오늘 본 상품</S.SideBarTitle>
+          {todaylist
+            .filter((el) => el)
+            .map((el) => (
+              <S.SideBarContents
+                key={el._id}
+                onClick={onClickMoveToPage(`/markets/${el._id}`)}
+              >
+                <S.SideBarP>
+                  <LikeFilled style={{ color: "#ffd903" }} />
+                  &nbsp;&nbsp;
+                  {el.pickedCount}
+                </S.SideBarP>
+                {el.images && (
+                  <S.SidaBarImg
+                    src={`https://storage.googleapis.com/${el.images[0]}`}
+                  />
+                )}
+                <S.SidebarDetail>
+                  <S.SideBarName>{el.name}</S.SideBarName>
+                  <S.SideBarRemarks>{el.remarks}</S.SideBarRemarks>
+                  <S.SideBarPrice>{getPrice(el.price)}</S.SideBarPrice>
+                </S.SidebarDetail>
+              </S.SideBarContents>
+            ))}
+        </S.SideBarWrapper>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }

@@ -12,6 +12,8 @@ import {
 import usePayment from "../../hooks/custom/usePayment";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
+import { useLogout } from "../../hooks/mutations/useMutationLoginUser";
+import { useRouter } from "next/router";
 
 export default function LayoutHeader(): JSX.Element {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
@@ -20,10 +22,12 @@ export default function LayoutHeader(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const { onClickPayment, qqq, pointdata } = usePayment(point);
+  const [logoutUser] = useLogout();
   const Payment = () => {
     onClickPayment();
     setIsOpen((curr) => !curr);
   };
+  const router = useRouter();
   const { onClickMoveToPage } = useMoveToPage();
   const onChangePoint = (value: ChangeEvent<HTMLInputElement>) => {
     setPoint(Number(value.target.value));
@@ -34,6 +38,8 @@ export default function LayoutHeader(): JSX.Element {
     localStorage.removeItem("todaylist");
     setAccessToken("");
     setTodaylist([]);
+    void logoutUser();
+    void router.push("/");
   };
   const Point = pointdata?.fetchPointTransactions[0]?.balance;
   const { data } = useQueryFetchUser();
@@ -87,13 +93,16 @@ export default function LayoutHeader(): JSX.Element {
       <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
       <S.InnerWrapper>
         <S.InnerLogo onClick={onClickMoveToPage("/boards")}>
-          💎 LIVE
+          MyWebPage
         </S.InnerLogo>
         <div>
           {accessToken ? (
             <>
+              <S.HeaderSpan>
+                {data?.fetchUserLoggedIn.name}님 방문을 환영합니다.
+              </S.HeaderSpan>
               <Popover
-                placement="leftTop"
+                placement="rightTop"
                 title={text}
                 content={content}
                 trigger="click"
