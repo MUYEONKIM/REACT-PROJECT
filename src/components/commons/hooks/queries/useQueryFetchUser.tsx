@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client"
+import { gql, useQuery } from "@apollo/client";
 // import { IQuery } from "../../../../commons/types/generated/types";
 
 export const FETCH_USER = gql`
@@ -8,6 +8,11 @@ export const FETCH_USER = gql`
       email
       name
       picture
+      userPoint {
+        _id
+        amount
+      }
+      createdAt
     }
   }
 `;
@@ -16,4 +21,4 @@ export const useQueryFetchUser = () => {
   const query = useQuery(FETCH_USER);
 
   return query;
-}
+};

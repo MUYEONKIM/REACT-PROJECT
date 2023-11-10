@@ -28,6 +28,7 @@ export default function ApolloSetting(props: IApolloSettingProps): JSX.Element {
 
   useEffect(() => {
     void valueload.toPromise().then((newAccessToken) => {
+      console.log("apollo가 실행됬어요");
       setAccessToken(newAccessToken ?? "");
     });
   }, []);

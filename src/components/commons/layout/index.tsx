@@ -26,11 +26,13 @@ interface ILayoutProps {
 }
 
 const Page = ["/login", "/register"];
+const Main = ["/"];
 
 export default function Layout({ children }: ILayoutProps): JSX.Element {
   const router = useRouter();
 
   const HiddenPage = Page.includes(router.asPath);
+  const MainPage = Main.includes(router.asPath);
   return (
     <>
       {!HiddenPage ? (
@@ -40,9 +42,13 @@ export default function Layout({ children }: ILayoutProps): JSX.Element {
           <LayoutNavigation />
           <Content>
             <Body>{children}</Body>
-            <SideSection>
-              <SideBar />
-            </SideSection>
+            {!MainPage ? (
+              <SideSection>
+                <SideBar />
+              </SideSection>
+            ) : (
+              <></>
+            )}
           </Content>
         </>
       ) : (

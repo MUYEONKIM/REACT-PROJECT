@@ -54,13 +54,13 @@ export default function LayoutHeader(): JSX.Element {
   );
   const content = (
     <>
-      <S.ProfileFunction onClick={onClickPayment}>
+      <S.ProfileFunction onClick={() => setIsOpen((curr) => !curr)}>
         <S.ProfileSpan>
           <PlusSquareOutlined />
         </S.ProfileSpan>
         <S.ProfileSpan>충전하기</S.ProfileSpan>
       </S.ProfileFunction>
-      <S.ProfileFunction onClick={() => setIsOpen((curr) => !curr)}>
+      <S.ProfileFunction onClick={() => console.log("aa")}>
         <S.ProfileSpan>
           <UnorderedListOutlined />
         </S.ProfileSpan>
@@ -92,23 +92,23 @@ export default function LayoutHeader(): JSX.Element {
       </Modal>
       <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
       <S.InnerWrapper>
-        <S.InnerLogo onClick={onClickMoveToPage("/boards")}>
-          MyWebPage
-        </S.InnerLogo>
+        <S.InnerLogo onClick={onClickMoveToPage("/")}>MyWebPage</S.InnerLogo>
         <div>
           {accessToken ? (
             <>
-              <S.HeaderSpan>
-                {data?.fetchUserLoggedIn.name}님 방문을 환영합니다.
-              </S.HeaderSpan>
-              <Popover
-                placement="rightTop"
-                title={text}
-                content={content}
-                trigger="click"
-              >
-                <S.Avatar src="/board/profile.png" />
-              </Popover>
+              <S.SpanSection>
+                <S.HeaderSpan>
+                  {data?.fetchUserLoggedIn.name} 님 방문을 환영합니다
+                </S.HeaderSpan>
+                <Popover
+                  placement="rightTop"
+                  title={text}
+                  content={content}
+                  trigger="click"
+                >
+                  <S.Avatar src="/board/profile.png" />
+                </Popover>
+              </S.SpanSection>
             </>
           ) : (
             <>

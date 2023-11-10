@@ -36,8 +36,13 @@ export const InnerButton = styled.span`
   cursor: pointer;
 `;
 
+export const SpanSection = styled.section`
+  display: flex;
+  align-items: center;
+`;
+
 export const HeaderSpan = styled.span`
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   font-family: "live";
   color: #fa6400;
@@ -60,6 +65,7 @@ export const ProfileFunction = styled.section`
   display: flex;
   flex-direction: row;
   padding: 10px;
+  cursor: pointer;
 `;
 
 export const ProfileSpan = styled.span`

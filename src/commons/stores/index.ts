@@ -24,6 +24,7 @@ export const userInfo = atom({
 export const restoreAccessTokenLoadable = selector({
   key: `restoreAccessTokenLoadable/${v1()}`,
   get: async () => {
+    console.log("loadable가 실행됬어요");
     const newAccessToken = await getAccessToken();
     return newAccessToken;
   },
