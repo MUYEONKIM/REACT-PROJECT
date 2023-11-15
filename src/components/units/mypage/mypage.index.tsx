@@ -5,7 +5,14 @@ import UploadContainer from "../../commons/upload/Upload.container";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useQueryFetchUser } from "../../commons/hooks/queries/useQueryFetchUser";
+import MypagePoint from "./mypagepoint.index";
+import InfiniteScroll from "react-infinite-scroller";
+import { useMoveToPage } from "../../commons/hooks/custom/useMovetoPage";
+import { getPrice } from "../../../commons/libraries/price";
+import useItemInfiniteScrollPicked from "../../commons/hooks/custom/useItemInfiniteScrollPicked";
 export default function MyPageindex() {
+  const { onClickMarketPage } = useMoveToPage();
+  const { data: pickedData, onloadMore } = useItemInfiniteScrollPicked();
   const { data } = useQueryFetchUser();
   const [fileUrls, setFileUrls] = useState([""]);
   const [profile] = useState(true);
@@ -16,6 +23,8 @@ export default function MyPageindex() {
     newFileUrls[index] = fileUrl;
     setFileUrls(newFileUrls);
   };
+
+  console.log(pickedData, "asdasd");
   return (
     <S.Wrapper>
       {fileUrls.map((el, index) => (
@@ -27,9 +36,14 @@ export default function MyPageindex() {
           onChangeFileUrls={onChnageFileUrls}
         />
       ))}
+      <br />
+      <br />
       {data?.fetchUserLoggedIn.name}님 환영합니다
+      <br />
+      <br />
+      <br />
       <Descriptions
-        title="유저 정보"
+        title="&nbsp;&nbsp;&nbsp;유저 정보"
         bordered
         column={{
           xs: 1,
@@ -41,6 +55,43 @@ export default function MyPageindex() {
         }}
         items={descriptionsItems}
       />
+      <MypagePoint />
+      <S.TableTop />
+      <S.Table>
+        <S.PickedTitle>장바구니</S.PickedTitle>
+        <S.GoodsTable>
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={onloadMore}
+            hasMore={true}
+            useWindow={false}
+          >
+            {pickedData?.fetchUseditemsIPicked ? (
+              pickedData?.fetchUseditemsIPicked.map((el) => (
+                <S.Row key={el._id} onClick={onClickMarketPage(el)}>
+                  <S.ColumnImg
+                    src={
+                      el.images?.[0]
+                        ? `https://storage.googleapis.com/${el.images[0]}`
+                        : "/board/profile.png"
+                    }
+                  />
+                  <S.ItemContent>
+                    <S.ItemSection>
+                      <S.ItemTitle>{el.name}</S.ItemTitle>
+                      <S.ItemRemarks>{el.remarks}</S.ItemRemarks>
+                      <S.ItemTags>{el.tags}</S.ItemTags>
+                    </S.ItemSection>
+                    <S.ItemPrice>{getPrice(el.price)}</S.ItemPrice>
+                  </S.ItemContent>
+                </S.Row>
+              ))
+            ) : (
+              <></>
+            )}
+          </InfiniteScroll>
+        </S.GoodsTable>
+      </S.Table>
     </S.Wrapper>
   );
 }

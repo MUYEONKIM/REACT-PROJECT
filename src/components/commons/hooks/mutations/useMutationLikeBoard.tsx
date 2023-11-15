@@ -1,5 +1,8 @@
 import { gql, useMutation } from "@apollo/client";
-import type { IMutation, IMutationLikeBoardArgs } from "../../../../commons/types/generated/types";
+import type {
+  IMutation,
+  IMutationLikeBoardArgs,
+} from "../../../../commons/types/generated/types";
 
 export const LIKE_BOARD = gql`
   mutation likeBoard($boardId: ID!) {
@@ -8,8 +11,10 @@ export const LIKE_BOARD = gql`
 `;
 
 export const useMutationLikeBoard = () => {
-  const mutation = useMutation<Pick<IMutation, "likeBoard">, IMutationLikeBoardArgs>(LIKE_BOARD);
+  const mutation = useMutation<
+    Pick<IMutation, "likeBoard">,
+    IMutationLikeBoardArgs
+  >(LIKE_BOARD);
 
-  return mutation
-}
-
+  return mutation;
+};
