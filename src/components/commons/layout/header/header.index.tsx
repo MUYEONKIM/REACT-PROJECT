@@ -2,7 +2,7 @@ import { useRecoilState } from "recoil";
 import { useMoveToPage } from "../../hooks/custom/useMovetoPage";
 import * as S from "./header.styles";
 import { accessTokenState, todaylistState } from "../../../../commons/stores";
-import { Modal, Popover } from "antd";
+import { Modal, Popover, Avatar } from "antd";
 import { useQueryFetchUser } from "../../hooks/queries/useQueryFetchUser";
 import {
   LogoutOutlined,
@@ -14,8 +14,10 @@ import { useState } from "react";
 import type { ChangeEvent } from "react";
 import { useLogout } from "../../hooks/mutations/useMutationLoginUser";
 import { useRouter } from "next/router";
+import MainPage from "../../../units/main/main";
+import { ProfileUpload } from "../../upload/Upload.style";
 
-export default function LayoutHeader(): JSX.Element {
+export default function LayoutHeader(props: any): JSX.Element {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const [, setTodaylist] = useRecoilState(todaylistState);
   const [point, setPoint] = useState(0);
@@ -45,7 +47,18 @@ export default function LayoutHeader(): JSX.Element {
   const { data } = useQueryFetchUser();
   const text = (
     <S.Profile>
-      <S.Avatar src="/board/profile.png" />
+      <Avatar
+        size={48}
+        icon={
+          data?.fetchUserLoggedIn.picture ? (
+            <S.Avatar
+              src={`https://storage.googleapis.com/${data?.fetchUserLoggedIn.picture}`}
+            />
+          ) : (
+            <ProfileUpload />
+          )
+        }
+      />
       <S.Profilecontent>
         <S.ProfileSpan>{data?.fetchUserLoggedIn.name}</S.ProfileSpan>
         <S.ProfileSpan>{qqq || Point} : Point</S.ProfileSpan>
@@ -75,7 +88,7 @@ export default function LayoutHeader(): JSX.Element {
     </>
   );
   return (
-    <S.Wrapper>
+    <S.Wrapper isMain={props.isMain}>
       <Modal
         open={isOpen}
         onCancel={() => setIsOpen((curr) => !curr)}
@@ -106,7 +119,18 @@ export default function LayoutHeader(): JSX.Element {
                   content={content}
                   trigger="click"
                 >
-                  <S.Avatar src="/board/profile.png" />
+                  <Avatar
+                    size={48}
+                    icon={
+                      data?.fetchUserLoggedIn.picture ? (
+                        <S.Avatar
+                          src={`https://storage.googleapis.com/${data?.fetchUserLoggedIn.picture}`}
+                        />
+                      ) : (
+                        <ProfileUpload />
+                      )
+                    }
+                  />
                 </Popover>
               </S.SpanSection>
             </>
@@ -122,6 +146,7 @@ export default function LayoutHeader(): JSX.Element {
           )}
         </div>
       </S.InnerWrapper>
+      {props.isMain ? <MainPage /> : <></>}
     </S.Wrapper>
   );
 }

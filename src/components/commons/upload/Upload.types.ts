@@ -1,6 +1,8 @@
 import type { ChangeEvent, RefObject } from "react";
+import type { IFetchUser } from "../hooks/queries/useQueryFetchUser";
 
 export interface IUploadsProps {
+  data?: IFetchUser;
   profile?: boolean;
   index: number;
   fileUrl: string;
@@ -8,6 +10,7 @@ export interface IUploadsProps {
 }
 
 export interface IUploadsUIProps {
+  data?: IFetchUser;
   profile?: boolean;
   fileRef: RefObject<HTMLInputElement>;
   fileUrl: string;

@@ -4,21 +4,38 @@ interface Isubmit {
   isActive: boolean;
 }
 
+interface IMainPage {
+  isMain: boolean;
+}
+
 export const Wrapper = styled.div`
-  height: 152px;
+  width: 100%;
+  height: ${(props: IMainPage) => (props.isMain ? "100vh" : "552px")};
+  min-height: ${(props: IMainPage) => (props.isMain ? "1080px" : "552px")};
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  border-bottom: 1px solid;
+  background-image: url("/backgroundImage/background_main.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  /* filter: saturate(20%); */
 `;
 
 export const InnerWrapper = styled.div`
-  width: 1200px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   font-size: 18px;
+  height: 152px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0 300px 0 300px;
 `;
 
 export const InnerLogo = styled.div`
@@ -32,7 +49,10 @@ export const InnerLogo = styled.div`
 
 export const InnerButton = styled.span`
   margin: 10px;
-  color: #5729ff;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: "live";
+  font-style: italic;
   cursor: pointer;
 `;
 

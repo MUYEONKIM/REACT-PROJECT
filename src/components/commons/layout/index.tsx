@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import LayoutBanner from "./banner/banner.index";
 import LayoutHeader from "./header/header.index";
 import LayoutNavigation from "./navigation/navigation.index";
 import styled from "@emotion/styled";
@@ -25,8 +24,8 @@ interface ILayoutProps {
   children: JSX.Element;
 }
 
-const Page = ["/login", "/register"];
-const Main = ["/"];
+const Page = ["/", "/login", "/register"];
+const Main = ["/mypage"];
 
 export default function Layout({ children }: ILayoutProps): JSX.Element {
   const router = useRouter();
@@ -38,7 +37,6 @@ export default function Layout({ children }: ILayoutProps): JSX.Element {
       {!HiddenPage ? (
         <>
           <LayoutHeader />
-          <LayoutBanner />
           <LayoutNavigation />
           <Content>
             <Body>{children}</Body>

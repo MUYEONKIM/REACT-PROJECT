@@ -32,6 +32,7 @@ export default function UploadContainer(props: IUploadsProps) {
   };
   return (
     <UploadUI
+      data={props.data}
       profile={props.profile}
       fileRef={fileRef}
       fileUrl={props.fileUrl}

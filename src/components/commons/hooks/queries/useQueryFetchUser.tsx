@@ -1,5 +1,11 @@
 import { gql, useQuery } from "@apollo/client";
-// import { IQuery } from "../../../../commons/types/generated/types";
+
+export interface IFetchUser {
+  fetchUserLoggedIn: {
+    name: string;
+    picture: string;
+  };
+}
 
 export const FETCH_USER = gql`
   query fetchUserLoggedIn {
@@ -18,7 +24,7 @@ export const FETCH_USER = gql`
 `;
 
 export const useQueryFetchUser = () => {
-  const query = useQuery(FETCH_USER);
+  const query = useQuery<IFetchUser>(FETCH_USER);
 
   return query;
 };

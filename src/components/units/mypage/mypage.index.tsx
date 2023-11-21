@@ -1,16 +1,21 @@
-import { Descriptions } from "antd";
+import { Descriptions, Modal } from "antd";
 import * as S from "./mypage.style";
 import MypageItem from "./mypage.items";
 import UploadContainer from "../../commons/upload/Upload.container";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useQueryFetchUser } from "../../commons/hooks/queries/useQueryFetchUser";
+import {
+  FETCH_USER,
+  useQueryFetchUser,
+} from "../../commons/hooks/queries/useQueryFetchUser";
 import MypagePoint from "./mypagepoint.index";
 import InfiniteScroll from "react-infinite-scroller";
 import { useMoveToPage } from "../../commons/hooks/custom/useMovetoPage";
 import { getPrice } from "../../../commons/libraries/price";
 import useItemInfiniteScrollPicked from "../../commons/hooks/custom/useItemInfiniteScrollPicked";
 import { withAuth } from "../../commons/hocs/withAuth";
+import { useMutationUpdateUser } from "../../commons/hooks/mutations/useMutationUpdateUser";
+import { useRouter } from "next/router";
 
 const MyPageindex = () => {
   const { onClickMarketPage } = useMoveToPage();
@@ -18,7 +23,9 @@ const MyPageindex = () => {
   const { data } = useQueryFetchUser();
   const [fileUrls, setFileUrls] = useState([""]);
   const [profile] = useState(true);
+  const [updateUser] = useMutationUpdateUser();
   const descriptionsItems = MypageItem(data);
+  const router = useRouter();
 
   const onChnageFileUrls = (fileUrl: string, index: number): void => {
     const newFileUrls = [...fileUrls];
@@ -26,10 +33,31 @@ const MyPageindex = () => {
     setFileUrls(newFileUrls);
   };
 
+  const onClickUpdate = async () => {
+    if (fileUrls[0] === "")
+      return Modal.error({ content: "변경사항이 없습니다." });
+    try {
+      await updateUser({
+        variables: {
+          updateUserInput: {
+            picture: fileUrls[0],
+          },
+        },
+        refetchQueries: [{ query: FETCH_USER }],
+      });
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <S.Wrapper>
+      {data?.fetchUserLoggedIn.name}님 환영합니다
+      <br />
+      <br />
       {fileUrls.map((el, index) => (
         <UploadContainer
+          data={data}
           profile={profile}
           key={uuidv4()}
           index={index}
@@ -38,9 +66,7 @@ const MyPageindex = () => {
         />
       ))}
       <br />
-      <br />
-      {data?.fetchUserLoggedIn.name}님 환영합니다
-      <br />
+      <S.SubmitButton onClick={onClickUpdate}>수정하기</S.SubmitButton>
       <br />
       <br />
       <Descriptions

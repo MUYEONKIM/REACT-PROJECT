@@ -20,25 +20,33 @@ export default function UploadUI(props: IUploadsUIProps): JSX.Element {
   return (
     <>
       {props.profile ? (
-        props.fileUrl !== "" ? (
-          <Avatar
-            style={{ backgroundColor: "white" }}
-            size={128}
-            onClick={props.onClickUpload}
-            icon={
+        // props.fileUrl !== "" ? (
+        <Avatar
+          style={{ backgroundColor: "white" }}
+          size={128}
+          onClick={props.onClickUpload}
+          icon={
+            props.fileUrl !== "" ? (
               <ProfileImage
                 src={`https://storage.googleapis.com/${props.fileUrl}`}
               />
-            }
-          />
-        ) : (
-          <Avatar
-            size={128}
-            icon={<ProfileUpload />}
-            onClick={props.onClickUpload}
-          />
-        )
-      ) : props.fileUrl !== "" ? (
+            ) : props.data?.fetchUserLoggedIn.picture ? (
+              <ProfileImage
+                src={`https://storage.googleapis.com/${props.data.fetchUserLoggedIn.picture}`}
+              />
+            ) : (
+              <ProfileUpload />
+            )
+          }
+        />
+      ) : // ) : (
+      //   <Avatar
+      //     size={128}
+      //     icon={<ProfileUpload />}
+      //     onClick={props.onClickUpload}
+      //   />
+      // )
+      props.fileUrl !== "" ? (
         <UplaodImage
           onClick={props.onClickUpload}
           src={`https://storage.googleapis.com/${props.fileUrl}`}

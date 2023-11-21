@@ -1,9 +1,12 @@
-import MainPage from "../src/components/units/main/main";
+import { useState } from "react";
+import LayoutHeader from "../src/components/commons/layout/header/header.index";
 
 export default function Main(): JSX.Element {
+  const [isMain] = useState(true);
+
   return (
     <>
-      <MainPage />
+      <LayoutHeader isMain={isMain} />
     </>
   );
 }

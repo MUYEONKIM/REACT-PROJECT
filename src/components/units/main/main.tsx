@@ -1,85 +1,47 @@
-import { getPrice } from "../../../commons/libraries/price";
 import { useMoveToPage } from "../../commons/hooks/custom/useMovetoPage";
-import { useQueryFetchUseditemsOfTheBest } from "../../commons/hooks/queries/useQueryFetchUseditemsOfTheBest";
-import * as G from "../goods/list/Goodslist.style";
-import * as S from "../board/list/Boardlist.style";
-import * as T from "./main.style";
-import { Card } from "antd";
-import { useQueryFetchBoardsOfTheBest } from "../../commons/hooks/queries/useQueryFetchBoardsOfTheBest";
-import { getDate } from "../../../commons/libraries/utils";
+import * as S from "./main.style";
 
 export default function MainPage(): JSX.Element {
-  const { data } = useQueryFetchBoardsOfTheBest();
-  const { data: dataBest } = useQueryFetchUseditemsOfTheBest();
-  const { onClickMoveToPage, onClickMarketPage } = useMoveToPage();
-  const { Meta } = Card;
+  const { onClickMoveToPage } = useMoveToPage();
 
   return (
     <>
-      <T.Wrapper>
-        <T.ItemsWrapper>
-          가장 뜨는 상품
-          {dataBest?.fetchUseditemsOfTheBest.map((el) => (
-            <G.BestBoardCard
-              onClick={onClickMarketPage(el)}
-              key={el._id}
-              hoverable
-              cover={
-                <G.BestBoardImg
-                  src={
-                    el.images?.[0]
-                      ? `https://storage.googleapis.com/${el.images[0]}`
-                      : "/board/profile.png"
-                  }
-                />
-              }
-            >
-              <Meta title={el.name} />
-              <G.BestSection>
-                <G.BestContent>
-                  <G.BoardRemarks>{el.remarks}</G.BoardRemarks>
-                  <G.BoardPrice>{getPrice(Number(el.price))}</G.BoardPrice>
-                </G.BestContent>
-                <G.BestContent>
-                  <G.HeartIcon />
-                  <G.BoardP>{el.pickedCount}</G.BoardP>
-                </G.BestContent>
-              </G.BestSection>
-            </G.BestBoardCard>
-          ))}
-        </T.ItemsWrapper>
-        <T.ItemsWrapper>
-          가장 핫한 게시판
-          {data?.fetchBoardsOfTheBest.map((el) => (
-            <S.BestBoardCard
-              onClick={onClickMoveToPage(`/boards/${el._id}`)}
-              key={el._id}
-              hoverable
-              cover={
-                <S.BestBoardImg
-                  src={
-                    el.images?.[0]
-                      ? `https://storage.googleapis.com/${el.images[0]}`
-                      : "/board/profile.png"
-                  }
-                />
-              }
-            >
-              <Meta title={el.title} />
-              <S.BestSection>
-                <S.BestContent>
-                  <S.BoardP>{el.writer}</S.BoardP>
-                  <S.BoardP>{getDate(el.createdAt)}</S.BoardP>
-                </S.BestContent>
-                <S.BestContent>
-                  <S.LikeIcon />
-                  <S.BoardP>{el.likeCount}</S.BoardP>
-                </S.BestContent>
-              </S.BestSection>
-            </S.BestBoardCard>
-          ))}
-        </T.ItemsWrapper>
-      </T.Wrapper>
+      <S.Wrapper>
+        <S.WrapperTitle>ABOUT PAGE</S.WrapperTitle>
+        <S.WrapperContent>
+          사용자간의 상품 및 중고거래를 돕기 위한 사이트입니다
+          <br />
+          포인트 충전 방식으로 교환이 이루어집니다
+        </S.WrapperContent>
+      </S.Wrapper>
+      <S.ItemsWrapper>
+        <S.Content onClick={onClickMoveToPage("/boards")}>
+          <S.Title>게시판</S.Title>
+          <S.BoardIcon />
+          <S.Explain>
+            자유롭게 게시글 작성, 수정 및 삭제가 가능합니다. <br />
+            게시글 상세보기는 로그인 후 이용가능 합니다
+          </S.Explain>
+        </S.Content>
+        <S.Line />
+        <S.Content onClick={onClickMoveToPage("/markets")}>
+          <S.Title>중고장터</S.Title>
+          <S.MarketIcon />
+          <S.Explain>
+            자유롭게 물건을 사고 팔 수 있는 중고장터입니다. <br />
+            충전된 포인트를 이용하여 교환이 이루어집니다
+          </S.Explain>
+        </S.Content>
+        <S.Line />
+        <S.Content onClick={onClickMoveToPage("/mypage")}>
+          <S.Title>마이페이지</S.Title>
+          <S.MypageIcon />
+          <S.Explain>
+            사용자의 정보 및 장바구니 상품, 포인트 충천 및 거래 내역을 확인할 수
+            있습니다.
+          </S.Explain>
+        </S.Content>
+      </S.ItemsWrapper>
     </>
   );
 }
