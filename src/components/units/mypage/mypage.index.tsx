@@ -10,7 +10,9 @@ import InfiniteScroll from "react-infinite-scroller";
 import { useMoveToPage } from "../../commons/hooks/custom/useMovetoPage";
 import { getPrice } from "../../../commons/libraries/price";
 import useItemInfiniteScrollPicked from "../../commons/hooks/custom/useItemInfiniteScrollPicked";
-export default function MyPageindex() {
+import { withAuth } from "../../commons/hocs/withAuth";
+
+const MyPageindex = () => {
   const { onClickMarketPage } = useMoveToPage();
   const { data: pickedData, onloadMore } = useItemInfiniteScrollPicked();
   const { data } = useQueryFetchUser();
@@ -24,7 +26,6 @@ export default function MyPageindex() {
     setFileUrls(newFileUrls);
   };
 
-  console.log(pickedData, "asdasd");
   return (
     <S.Wrapper>
       {fileUrls.map((el, index) => (
@@ -94,4 +95,6 @@ export default function MyPageindex() {
       </S.Table>
     </S.Wrapper>
   );
-}
+};
+
+export default withAuth(MyPageindex);
