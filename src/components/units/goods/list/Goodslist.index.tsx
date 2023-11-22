@@ -8,16 +8,21 @@ import { useQueryFetchUseditemsOfTheBest } from "../../../commons/hooks/queries/
 import { getPrice } from "../../../../commons/libraries/price";
 import useItemInfiniteScroll from "../../../commons/hooks/custom/useItemInfiniteScroll";
 import InfiniteScroll from "react-infinite-scroller";
+import { useState } from "react";
 const SECRET = "!@#";
 
 export default function GoodsList(): JSX.Element {
-  const { data, onloadMore, refetch } = useItemInfiniteScroll();
+  const [Soldout, setSoldout] = useState(false);
+  const { data, onloadMore, refetch } = useItemInfiniteScroll(Soldout);
   const { data: dataBest } = useQueryFetchUseditemsOfTheBest();
   const { keyword, onChangeSearch } = useSearchBar({
     refetch,
   });
   const { Meta } = Card;
   const { onClickMoveToPage, onClickMarketPage } = useMoveToPage();
+  const onChangeSoldout = () => {
+    setSoldout((curr) => !curr);
+  };
   return (
     <S.Wrapper>
       <S.BestWrapper>
@@ -50,9 +55,12 @@ export default function GoodsList(): JSX.Element {
           </S.BestBoardCard>
         ))}
       </S.BestWrapper>
-      <SearchBar onChangeKeyword={onChangeSearch} />
+      <S.SearchBarWrapper>
+        <SearchBar onChangeKeyword={onChangeSearch} />
+        <S.soldCheck onChange={onChangeSoldout}>판매된 상품 보기</S.soldCheck>
+      </S.SearchBarWrapper>
       <S.TableTop />
-      <S.Table>
+      <S.Table Soldout={Soldout}>
         <InfiniteScroll
           pageStart={0}
           loadMore={onloadMore}

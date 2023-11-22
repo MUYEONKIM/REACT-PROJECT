@@ -15,7 +15,6 @@ import { getPrice } from "../../../commons/libraries/price";
 import useItemInfiniteScrollPicked from "../../commons/hooks/custom/useItemInfiniteScrollPicked";
 import { withAuth } from "../../commons/hocs/withAuth";
 import { useMutationUpdateUser } from "../../commons/hooks/mutations/useMutationUpdateUser";
-import { useRouter } from "next/router";
 
 const MyPageindex = () => {
   const { onClickMarketPage } = useMoveToPage();
@@ -25,7 +24,6 @@ const MyPageindex = () => {
   const [profile] = useState(true);
   const [updateUser] = useMutationUpdateUser();
   const descriptionsItems = MypageItem(data);
-  const router = useRouter();
 
   const onChnageFileUrls = (fileUrl: string, index: number): void => {
     const newFileUrls = [...fileUrls];

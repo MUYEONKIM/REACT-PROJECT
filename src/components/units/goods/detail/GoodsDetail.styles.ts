@@ -59,7 +59,7 @@ export const Title = styled.p`
   font-size: 25px;
   font-weight: bolder;
   padding-top: 5px;
-  color : #4e4e4e;
+  color: #4e4e4e;
 `;
 
 export const Remarks = styled.h3`
@@ -71,14 +71,14 @@ export const PickCount = styled.section`
   width: 100%;
   text-align: end;
   font-size: 20px;
-`
+`;
 
 export const HeartIcon = styled(HeartFilled)`
   color: #ffd600;
   margin: 0px 20px;
   cursor: pointer;
   font-size: 24px;
-`
+`;
 
 export const Price = styled.h1`
   padding-top: 10px;
@@ -91,7 +91,7 @@ export const Contents = styled.section`
 export const MapSection = styled.section`
   height: 640px;
   padding-top: 40px;
-`
+`;
 
 export const BottomWrapper = styled.div`
   display: flex;
@@ -165,4 +165,99 @@ export const Image = styled.img`
   width: 996px;
   height: 480px;
   margin-bottom: 30px;
+`;
+
+export const BuySection = styled.section`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+`;
+
+export const SoldoutButton = styled.button`
+  align-items: center;
+  background-clip: padding-box;
+  background-color: gray;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family:
+    system-ui,
+    -apple-system,
+    system-ui,
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(0.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+`;
+
+export const BuyButton = styled.button`
+  align-items: center;
+  background-clip: padding-box;
+  background-color: #fa6400;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family:
+    system-ui,
+    -apple-system,
+    system-ui,
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(0.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+
+  &:hover,
+  &:focus {
+    background-color: #fb8332;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    background-color: #c85000;
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    transform: translateY(0);
+  }
 `;

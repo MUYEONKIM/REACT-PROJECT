@@ -10,13 +10,16 @@ import { useLikeitem } from "../../../commons/hooks/custom/useLikeitem";
 import { useDeleteItem } from "../../../commons/hooks/custom/useDeleteItem";
 import Dompurify from "dompurify";
 import { withAuth } from "../../../commons/hocs/withAuth";
+import { useBuyingItem } from "../../../commons/hooks/custom/useBuyingItem";
 
 const GoodsDetail = (): JSX.Element => {
   const { id } = useCheckId("boardid");
   const { data } = useQueryFetchUseditem({ useditemId: id });
+  const onClickBuying = useBuyingItem(id);
   const onClickLike = useLikeitem(id);
   const onClickDelete = useDeleteItem(id);
   const { onClickMoveToPage } = useMoveToPage();
+
   return (
     <S.Wrapper>
       <S.CardWrapper>
@@ -86,6 +89,13 @@ const GoodsDetail = (): JSX.Element => {
           ) : (
             <></>
           )}
+          <S.BuySection>
+            {data?.fetchUseditem.buyer ? (
+              <S.SoldoutButton>매진</S.SoldoutButton>
+            ) : (
+              <S.BuyButton onClick={onClickBuying}>구매</S.BuyButton>
+            )}
+          </S.BuySection>
         </S.Body>
       </S.CardWrapper>
       <S.BottomWrapper>

@@ -14,9 +14,12 @@ interface ReturnType {
   count?: number;
 }
 
-export default function useItemInfiniteScroll(): ReturnType {
-  const { data, fetchMore, refetch } = useQueryFetchUseditems();
-
+export default function useItemInfiniteScroll(Soldout: boolean): ReturnType {
+  const { data, fetchMore, refetch } = useQueryFetchUseditems({
+    page: 1,
+    isSoldout: Soldout,
+  });
+  console.log(data);
   const onloadMore = (): void => {
     if (data === undefined) return;
     void fetchMore({
@@ -24,7 +27,6 @@ export default function useItemInfiniteScroll(): ReturnType {
         page: Math.ceil((data?.fetchUseditems.length ?? 10) / 10) + 1,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
-        console.log(prev, fetchMoreResult);
         if (fetchMoreResult?.fetchUseditems === undefined)
           return {
             fetchUseditems: [...prev.fetchUseditems],
