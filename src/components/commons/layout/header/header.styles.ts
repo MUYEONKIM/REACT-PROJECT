@@ -53,12 +53,17 @@ export const InnerButton = styled.span`
   font-weight: bold;
   font-family: "live";
   font-style: italic;
+  color: #fa6400;
   cursor: pointer;
 `;
 
 export const SpanSection = styled.section`
   display: flex;
   align-items: center;
+  border: 1px dashed orange;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: white;
 `;
 
 export const HeaderSpan = styled.span`

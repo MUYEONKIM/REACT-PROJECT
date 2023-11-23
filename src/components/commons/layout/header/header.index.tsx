@@ -105,7 +105,9 @@ export default function LayoutHeader(props: any): JSX.Element {
       </Modal>
       <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
       <S.InnerWrapper>
-        <S.InnerLogo onClick={onClickMoveToPage("/")}>MyWebPage</S.InnerLogo>
+        <S.InnerLogo onClick={onClickMoveToPage("/")}>
+          DaNaWa Market
+        </S.InnerLogo>
         <div>
           {accessToken ? (
             <>
@@ -135,14 +137,15 @@ export default function LayoutHeader(props: any): JSX.Element {
               </S.SpanSection>
             </>
           ) : (
-            <>
+            <S.SpanSection>
               <S.InnerButton onClick={onClickMoveToPage("/login")}>
-                로그인
+                SIGN IN
               </S.InnerButton>
+              /
               <S.InnerButton onClick={onClickMoveToPage("/register")}>
-                회원가입
+                SIGN UP
               </S.InnerButton>
-            </>
+            </S.SpanSection>
           )}
         </div>
       </S.InnerWrapper>

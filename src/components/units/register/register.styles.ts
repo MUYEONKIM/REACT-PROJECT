@@ -4,6 +4,7 @@ export const RegisterWrapper = styled.form`
   display: flex;
   flex-direction: row;
   width: 100vw;
+  height: 100vh;
   min-height: 950px;
   justify-content: flex-end;
   background-image: url("/backgroundImage/background_main.jpg");

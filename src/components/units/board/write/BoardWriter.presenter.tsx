@@ -125,13 +125,13 @@ export default function BoardWriteUI(props: IBoardWritePropsUI): JSX.Element {
             ))}
           </S.ImageBox>
         </S.ImageWrapper>
-        <S.OptionWrapper>
+        {/* <S.OptionWrapper>
           <S.Label>메인설정</S.Label>
           <S.RadioButton type="radio" id="youtube" name="radio-button" />
           <S.RadioLabel htmlFor="youtube">유튜브</S.RadioLabel>
           <S.RadioButton type="radio" id="image" name="radio-button" />
           <S.RadioLabel htmlFor="image">사진</S.RadioLabel>
-        </S.OptionWrapper>
+        </S.OptionWrapper> */}
         <S.ButtonWrapper>
           <S.SubmitButton
             disabled={props.isDoubleClick}
