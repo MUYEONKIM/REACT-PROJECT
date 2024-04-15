@@ -1,6 +1,9 @@
 
 <img width="1276" alt="Untitled" src="https://github.com/MUYEONKIM/REACT-PROJECT/assets/114132468/898b7dec-d112-40eb-ae7b-ea31700e0b8a">
 
+### 자세한 내용은 아래 노션 페이지 참고
+## https://www.notion.so/muyeon/Frontend-b2be2d76f877428baa3d96ceb4bf9f59
+
 ## 📙 **개발 내용 요약**
 
 **Apollo-client 와 GraphQL**
