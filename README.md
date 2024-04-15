@@ -1,38 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+<img width="1276" alt="Untitled" src="https://github.com/MUYEONKIM/REACT-PROJECT/assets/114132468/898b7dec-d112-40eb-ae7b-ea31700e0b8a">
 
-First, run the development server:
+## 📙 **개발 내용 요약**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+**Apollo-client 와 GraphQL**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- REST-API 대신 Apollo-Client를 이용한 Graphql API를 통해 서버와 데이터를 통신했습니다. GraphQl의 쓴 이유로는 Rest-api와는 다르게 필요없는 데이터를 받아오는 ‘오버페칭’ 문제점과 한 번에 하나의 api만을 요청하기 때문에 한개씩 여러번 데이터를 받아오는 ‘언더페칭’의 문제점이 보다 개선되어 있기 때문입니다.  그 결과, 필요 없는 데이터는 받아오지 않으며, 불필요하게 많은 요청이 날라가는 문제를 개선할 수 있었습니다.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+**Recoil을 이용한 손쉬운 전역 상태 관리**
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Apollo-client를 통해 GraphQL 을 이용해 서버와 통신한 데이터를 캐시로 저장하였지만, 로컬 상태 관리까지 함께 관리하기에는 무거워 보다 사용이 쉽고, 유연한 Reocil을 도입하여 로컬 상태 관리를 전역적으로 했습니다.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+**Typescript 사용**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- 이전 프로젝트에서는 javascript를 이용해서 개발을 하였습니다. 하지만 저는 type checking이 되지 않고, 에러 발생도 런타임에서 된다는 점에 불만을 가지고 있었습니다. 그래서 typescript를 도입하였습니다.
+- 도입 이후 개발에 **안정성이 증가**하였고 컴파일링 단계에서 에러를 1차적으로 걸러주기 때문에 
+기존보다 **에러를 처리하는 속도가 빨라졌습니다**.
 
-## Learn More
+**Eslint, Prettier 도입**
 
-To learn more about Next.js, take a look at the following resources:
+- 비록 혼자 진행한 개인 프로젝트이지만, 지난 프로젝트에서 eslint, prettier을 도입하지 못 했던 이내 아쉬웠습니다. 때문에 규칙을 정해 공통된 코드를 작성할 수 있게 에러를 출력해주는 eslint와 코드를 보기 좋게 바꿔 주는 prettier를 통해 일관성 있는 스타일을 유지하며 코드를 작성하였습니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**중복 컴포넌트 공통 컴포넌트 분리**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- 프로젝트를 진행하며, 공통되는 컴포넌트 layout, 글쓰기 및 수정하기, 게시판 댓글 쓰기, 상품 게시판 댓글 쓰기 등 공통적으로 사용되는 부분이 많았습니다.
+- 이런 부분을 모두 다른 컴포넌트로 나누는 것은 모두 **코드의 중복**이라고 생각 하였고, 그래서 컴포넌트들을 분리하여 재 사용성을 높이고 유지 보수를 쉽게 하도록 만들어 주었습니다.
+- 그 덕분에, 중복 코드를 제거하고 기능 추가 시에도 이전에 만들어 놓은 컴포넌들을 이용해서 간단하게 구현할 수 있었습니다.
 
-## Deploy on Vercel
+**커스텀 훅을 이용한 함수 분리 및 HOC**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 재 사용 가능한 로직을 분리하여 유지, 보수가 쉽고, 최대한 깔끔한 코드를 만들기 위해 javascript 함수 scope 내에서 함수를 선언하지 않고 커스텀 훅을 만들어 함수를 이용하였습니다.
+- HOC를 이용해 컴포넌트가 렌더링 되기 전 withAuth 컴포넌트를 먼저 실행하여 로그인 권한 체크를 할 수 있도록 구현하였습니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**검색 기능 구현**
+
+- 키워드 검색을 통한 게시글 및 상품 검색을 위해 debouncing 기능을 적용하였습니다. onChange를 이용하여 키워드를 검색하려고 하면 한 글자 마다 모두 이벤트가 실행이 됩니다. 이러한 이벤트를 모두 api를 통해 요청을 보내면 과도한 요청이 일어날 수 있게 됩니다. 때문에 debouncing을 적용하여 몇 초 동안 입력이 없을 시 요청이 실행이 될 수 있도록 구현하였습니다
+
+**React-hook-form 및 yup 검증 라이브러리**
+
+- form태그와 onChange 이벤트와 state를 이용하여 데이터를 넘겨주기에는 중복되는 코드도 많고, 불필요하게 함수가 길어졌습니다. 때문에 react-hook-form 라이브러리를 이용하여 데이터를 쉽게 넘겨줄 수 있게 하였으며, yup 검증 라이브러리를 이용하여 schema를 생성해 유효성 검사를 진행하였습니다. 
+결과 불필요한 코드 및 중복된 코드들이 사라져 유지 보수가 쉽고 보기 편한 코드로 작성할 수 있었습니다.
+
+  
+
+**카카오 지도 api 및 카카오 페이 결제**
+
+- Next.js의 SSR 기능으로 인해, 첫 렌더링 시 document 가 정의 되지 않음 등의 오류가 발생하였습니다. 때문에 페이지가 렌더링 된 후 api 요청 등 함수가 실행이 될 수 있도록 useEffect 를 이용하여 문제를 해결했습니다.
+- router 기능을 이용하여 페이지 이동 시 카카오 지도 api를 보여주려고 하였지만, SPA 기능 때문에 페이지 이동 시 작동이 제대로 되지 않았습니다. 때문에 Next.js의 Link 태그와 a 태그를 이용하여 MPA기능을 이용하여 문제를 해결하였으며, 시멘틱 태그인 a태그를 이용함으로써 SEO 성능을 향상 시킬 수 있었습니다.
+
+**웹 에디터, xss doumurify**
+
+- React-quill 웹 에디터 라이브러리를 적용해 textarea를 대체하였습니다. 허나 Next.js를 이용하여 프로젝트를 진행하고 있기 때문에 documnet가 정의 되지 않았다고 오류가 발생하였습니다. 때문에 dynamic import를 통해 ssr 이슈를 해결하여 document가 호출된 이후 import 되도록 변경하여 문제를 해결하였습니다.
+- 웹 에디터로 작성한 내용은 XSS 공격을 막기 위해 HTML 태그가 포함된 문자열로 입력이 되기 때문에 본문 영역이 속한 공간에 dangerouslySetInnerHTML 속성을 주어 위험한 HTML이 있다고 지정해 준 후 공격 코드를 차단해주는 dompurify 라이브러리를 이용하였습니다.
+
+**refresh toekn**
+
+- accessToken의 기간 만료로 인한 권한 에러를 방지하기 위해 refreshToken을 발급 받아와 보안을 높이기 위해 쿠키 및 recoil에 저장되는 방식으로 진행하였습니다.
+- GraphQL 요청을 보낼 시 에러를 체크하여 토큰 만료 일시 refreshToken을 이용해 accessToken을 재발급 받도록 구현하였습니다. 또한 중복 요청을 방지하기 위해 recoil의 selector을 이용하여 토큰 재발급 api함수를 전역 적으로 관리해 방지하였습니다.
+
+**Optimistic ui**
+
+- ‘좋아요 수’와 ‘싫어요 수’와 같이 중요성이 높지 않은 데이터를 보여주기 위해서 GraphQL에 다시 요청을 보내 받아오는 것은 다소 시간이 지연될 수 있다고 판단되어 optimistic UI를 적용해 서버에서 요청을 받아오기 전 미리 data를 바꾸어서 보여주도록 구현하였습니다. 결과 조금 더 빠르게 데이터가 변경되는 것처럼 보여 만족도를 높일 수 있었습니다.
